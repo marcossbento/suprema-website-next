@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 
+
 export default {
     darkMode: ["class"],
     content: [
@@ -21,20 +22,23 @@ export default {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
+  				DEFAULT: '#182d70',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
+  				DEFAULT: '#355fa7',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
+			
+			greenSup:'#5ab24c',
+
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
   			},
   			accent: {
   				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				foreground: '#182d70'
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',

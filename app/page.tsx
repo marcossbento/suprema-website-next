@@ -1,38 +1,20 @@
 "use client";
 import { Header } from "@/components/header-sup";
-import Carousel from "@/components/ui/carousel";
+import { EmblaCarousel } from "@/components/hero-slider";
+import ServiceCards from "@/components/service-cards";
 
 export default function Home() {
 
-  const slideData = [
-    {
-      title: "Mystic Mountains",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1494806812796-244fe51b774d?q=80&w=3534&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "Urban Dreams",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1518710843675-2540dd79065c?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "Neon Nights",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1590041794748-2d8eb73a571c?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "Desert Whispers",
-      button: "Explore Component",
-      src: "https://images.unsplash.com/photo-1679420437432-80cfbf88986c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-
   return (
-    <main className="flex min-h-screen flex-col p-12">
+    <main className="bg-primary flex min-h-screen flex-col">
       <Header />
-      <div className="relative overflow-hidden w-full h-full py-20">
-      <Carousel slides={slideData} />
-    </div>
+      <div className="relative overflow-hidden w-7xl h-dvh">
+        <EmblaCarousel />
+      </div>
+      <div className="flex flex-col items-center justify-center py-6">
+        <h1 className="text-5xl font-bold text-white pb-6">Nossos <span className="text-greenSup">Serviços</span></h1>
+        <ServiceCards />
+      </div>
     </main>
   );
 }
