@@ -31,12 +31,12 @@ const cardVariants = {
         filter: "blur(0px)",
         transition: {
             type: "spring",
-            damping: 20,      // Reduzido de 25 para 20 para maior oscilação
-            stiffness: 100,   // Reduzido de 300 para 100 para movimento mais suave
-            mass: 1.2,        // Adiciona massa para um movimento mais natural
-            delay: 0.1,       // Pequeno atraso para melhor percepção
-            duration: 1.0,    // Aumentado de 0.4 para 1.0 segundos
-            ease: "easeOut"   // Curva de aceleração personalizada
+            damping: 20,   
+            stiffness: 100,  
+            mass: 1.2,        
+            delay: 0.1,     
+            duration: 1.0,   
+            ease: "easeOut"  
         }
     }
 };

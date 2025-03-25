@@ -1,9 +1,11 @@
 "use client";
 import ClientsSection from "@/components/clients";
+import ContactSection from "@/components/contact";
 import { Header } from "@/components/header-sup";
 import { EmblaCarousel } from "@/components/hero-slider";
 import ServiceCards from "@/components/service-cards";
 import { NossaEstrutura } from "@/components/structure";
+import WhyChooseUs from "@/components/why-choose-us";
 
 export default function Home() {
 
@@ -16,7 +18,9 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center">
         <ServiceCards />
         <NossaEstrutura />
+        <WhyChooseUs></WhyChooseUs>
         <ClientsSection />
+        <ContactSection />
       </div>
     </main>
   );

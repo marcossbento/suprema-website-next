@@ -162,7 +162,7 @@ export const Header = () => {
   return (
     <motion.header
       className={cn(
-        "flex justify-between p-3 mt-2 mx-2 bg-white rounded-full fixed top-0 left-0 right-0 z-50 shadow-lg",
+        "flex justify-between p-3 mt-2 mx-10 bg-white rounded-full fixed top-0 left-0 right-0 z-50 shadow-lg",
         isAtTop ? "mt-2" : "mt-0",
       )}
       initial={{ opacity: 0, y: -50 }}

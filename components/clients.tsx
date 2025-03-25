@@ -41,7 +41,7 @@ export default function ClientsCarousel() {
     skipSnaps: false,
     dragFree: true,
   }, [
-    Autoscroll({speed: 1})
+    Autoscroll({speed: 1, stopOnInteraction: false})
   ]);
 
   const [ref, inView] = useInView({
