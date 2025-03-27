@@ -162,7 +162,7 @@ export const Header = () => {
   return (
     <motion.header
       className={cn(
-        "flex justify-between p-3 mt-2 mx-10 bg-white rounded-full fixed top-0 left-0 right-0 z-50 shadow-lg",
+        "flex justify-between p-3 mt-2 mx-4 bg-white rounded-full fixed top-0 left-0 right-0 z-50 shadow-lg",
         isAtTop ? "mt-2" : "mt-0",
       )}
       initial={{ opacity: 0, y: -50 }}
@@ -247,10 +247,12 @@ export const Header = () => {
       </NavigationMenu>
 
       {/* Botão Área do Cliente */}
-      <div className="hidden md:flex">
+      <div className="hidden md:flex items-center">
+      <Link href={"https://portal.mylimsweb.cloud/Login"} className="size-fit" target="_blank">
         <button className="px-8 py-2 rounded-full bg-primary text-white font-bold transition duration-200 hover:bg-white hover:text-primary border-2 border-transparent hover:border-primary">
           Área do Cliente
         </button>
+      </Link>  
       </div>
 
       {/* Menu Mobile - Sheet/Sidebar */}

@@ -80,7 +80,7 @@ export default function ClientsCarousel() {
             {clients.map((client) => (
               <div 
                 key={client.id} 
-                className="flex-[0_0_50%] md:flex-[0_0_12%] px-6"
+                className="flex-[0_0_50%] md:flex-[0_0_20%] px-6"
               >
                   <Image
                     src={client.logo}

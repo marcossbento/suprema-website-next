@@ -33,10 +33,10 @@ const ContactCard = ({ data, variants }: { data: ContactCardData, variants: Vari
   return (
     <motion.div
       variants={variants}
-      className="bg-primary/90 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full"
+      className="border-2 border-primary/50 p-6 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 h-full"
     >
       <div className="flex flex-col items-center text-center h-full">
-        <div className="bg-white/10 p-4 rounded-full mb-4">
+        <div className="bg-primary/50 p-4 rounded-full mb-4">
           <Icon size={32} className="text-greenSup" />
         </div>
         <h3 className="text-xl font-semibold text-white mb-4">{title}</h3>
@@ -61,7 +61,7 @@ const ContactCard = ({ data, variants }: { data: ContactCardData, variants: Vari
         <Link
           href={action.href}
           target={action.openInNewTab ? "_blank" : undefined}
-          className="mt-6 inline-flex items-center text-greenSup hover:text-white transition-colors duration-300"
+          className="mt-6 inline-flex items-center text-greenSup-light/90 hover:text-green-600 transition-colors duration-300"
         >
           {action.text} <action.icon size={16} className="ml-1" />
         </Link>
