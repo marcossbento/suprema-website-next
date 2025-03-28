@@ -1,6 +1,7 @@
 "use client";
 import ClientsSection from "@/components/clients";
 import ContactSection from "@/components/contact";
+import Footer from "@/components/footer-sup";
 import { Header } from "@/components/header-sup";
 import { EmblaCarousel } from "@/components/hero-slider";
 import ServiceCards from "@/components/service-cards";
@@ -22,6 +23,7 @@ export default function Home() {
         <ClientsSection />
         <ContactSection />
       </div>
+      <Footer></Footer>
     </main>
   );
 }

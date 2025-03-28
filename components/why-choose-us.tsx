@@ -2,38 +2,21 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
-import Link from 'next/link';
 import CountUp from 'react-countup';
 import {
-  Award,
   Star,
   CheckCircle,
-  Droplet,
-  Apple,
-  Sprout,
-  CircleArrowDown,
-  Brush,
   Microscope,
   Layers,
   Users,
   UserCheck,
   Trophy,
-  MapPin,
-  Zap,
   Sparkles,
   BadgeCheck,
   Building,
-  Map,
-  CircleCheck
-} from 'lucide-react';
+  Map} from 'lucide-react';
 
 export default function WhyChooseUs() {
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.2,
-  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -156,12 +139,12 @@ export default function WhyChooseUs() {
                     <motion.h3
                       variants={elementVariants}
                       custom={1}
-                      className="flex gap-2 text-2xl items-center md:text-4xl font-bold text-white mb-2"
+                      className="flex gap-4 text-2xl items-center md:text-4xl font-bold text-white mb-2"
                     >
                       <motion.div
                         variants={elementVariants}
                         custom={0}
-                        className="bg-primary/10 p-3 rounded-full h-fit"
+                        className="bg-primary/10 border-2 border-primary-light/70 p-3 rounded-lg h-fit"
                       >
                         <benefit.icon size={24} className="text-greenSup" />
                       </motion.div>
@@ -266,7 +249,7 @@ export default function WhyChooseUs() {
                           <div className="bg-primary/50 p-3 rounded-full">
                             <value.icon size={20} className="text-greenSup" />
                           </div>
-                          <span className="text-greenSup text-sm font-medium">{value.title}</span>
+                          <span className="text-greenSup text-xs sm:text-base font-medium">{value.title}</span>
                         </motion.div>
                       ))}
                     </div>
