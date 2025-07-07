@@ -11,7 +11,7 @@ import WhyChooseUs from "@/components/why-choose-us";
 export default function Home() {
 
   return (
-    <main className="bg-primary flex min-h-screen flex-col">
+    <main id="main-content" className="bg-primary flex min-h-screen flex-col">
       <Header />
       <div className="relative overflow-hidden">
         <EmblaCarousel />
