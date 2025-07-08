@@ -1,113 +1,51 @@
+"use client"
 import React from "react";
-import {
-    Card,
-    CardFooter,
-    CardTitle,
-} from "@/components/ui/card"
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
-import { Droplet, Apple, CircleArrowDown, Sprout, Brush, Sparkles, TestTubes, Microscope } from "lucide-react";
+import { services } from "@/lib/data";
+import { Droplet, Apple, Waves, Sprout, Brush, Sparkles, TestTubes, Microscope, ArrowUpRight } from "lucide-react";
+
+const iconMap = {
+    Droplet, Apple, Sprout, Waves, Sparkles,
+    Brush, TestTubes, Microscope, ArrowUpRight
+};
 
 interface Service {
     id: number;
-    icon: React.ReactNode;
+    icon: keyof typeof iconMap;
     title: string;
     img: string;
     slug: string;
-  }
+}
 
 const cardVariants = {
     hidden: {
         opacity: 0,
-        y: 70,
-        scale: 0.95,
-        filter: "blur(5px)"
+        y: 50,
+        scale: 0.98
     },
     visible: {
         opacity: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
         transition: {
             type: "spring",
-            damping: 20,   
-            stiffness: 100,  
-            mass: 1.2,        
-            delay: 0.1,     
-            duration: 1.0,   
-            ease: "easeOut"  
+            damping: 15,
+            stiffness: 80,
+            duration: 0.5
         }
     }
 };
 
-const services = [
-    {
-        id: 1,
-        icon: <Droplet size={24} />,
-        title: "ANÁLISE DE ÁGUA",
-        img: "services/analise-agua.webp",
-        slug: "/servicos/analise-de-agua",
-    },
-    {
-        id: 2,
-        icon: <Apple size={24} />,
-        title: "ANÁLISE DE ALIMENTOS",
-        img: "services/analise-alimentos.webp",
-        slug: "/servicos/analise-de-alimentos",
-    },
-    {
-        id: 3,
-        icon: <Sprout size={24} />,
-        title: "ANÁLISE DE SOLO",
-        img: "services/analise-solo.webp",
-        slug: "/servicos/analise-de-solo",
-    },
-    {
-        id: 4,
-        icon: <CircleArrowDown size={24} />,
-        title: "EFLUENTES",
-        img: "services/efluentes.webp",
-        slug: "/servicos/efluentes",
-    },
-    {
-        id: 5,
-        icon: <Sparkles size={24} />,
-        title: "HIGIENIZAÇÃO DE RESERVATORIOS E CAMINHÕES",
-        img: "services/limpeza-higienizacao.webp",
-        slug: "/servicos/limpeza-e-higienizacao",
-    },
-    {
-        id: 6,
-        icon: <Brush size={24} />,
-        title: "COSMÉTICOS",
-        img: "services/cosmeticos.webp",
-        slug: "/servicos/cosmeticos",
-    },
-    {
-        id: 7,
-        icon: <TestTubes size={24} />,
-        title: "AMOSTRAGEM",
-        img: "services/amostragem.webp",
-        slug: "/servicos/amostragem",
-    },
-    {
-        id: 8,
-        icon: <Microscope size={24} />,
-        title: "OUTROS SERVIÇOS",
-        img: "services/outros-servicos.webp",
-        slug: "/servicos/outros-servicos",
-    },
-];
-
 const ServiceCard = ({ service }: { service: Service }) => {
     const [ref, inView] = useInView({
         triggerOnce: true,
-        threshold: 0.3,
-        rootMargin: "0px 0px -50px 0px"
+        threshold: 0.4,
     });
 
     const controls = useAnimation();
+    const IconComponent = iconMap[service.icon];
 
     React.useEffect(() => {
         if (inView) {
@@ -122,38 +60,32 @@ const ServiceCard = ({ service }: { service: Service }) => {
             initial="hidden"
             animate={controls}
         >
-            <Card
-                className="group border-none cursor-pointer bg-black h-96 relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5"
-            >
-                <Link href={service.slug}>
-                    <div
-                        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-all duration-300 opacity-70 group-hover:opacity-90 group-hover:scale-105"
-                        style={{
-                            backgroundImage: `url(${service.img})`,
-                            objectFit: "cover",
-                            willChange: "transform, opacity"
-                        }}
-                    >
-                    </div>
-                    <div className="relative z-10 h-full flex items-end justify-center">
-                        <CardFooter className="flex flex-col items-center text-center justify-center">
-                            <CardTitle className="flex items-center gap-2 text-xl font-semibold text-white [text-shadow:_0_1px_5px_#000000]">
-                                {service.icon}
-                                <span>{service.title}</span>
-                            </CardTitle>
+            <Link href={service.slug} className="group block overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <div className="relative h-96">
+                    <img
+                        src={service.img}
+                        alt={`Imagem ilustrativa do serviço de ${service.title}`}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                    />
 
-                            <button
-                                className="mt-4 px-5 py-2 bg-primary opacity-0 transform translate-y-10 
-                                rounded-full text-white font-bold text-sm
-                                transition-all duration-500 ease-in-out
-                                group-hover:opacity-100 group-hover:translate-y-0"
-                            >
-                                SAIBA MAIS
-                            </button>
-                        </CardFooter>
+                    {/* Overlay gradiente*/}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                    {/* Ícone de seta que aparece no hover*/}
+                    <div className="absolute top-4 right-4 p-2 bg-primary/50 rounded-full translate-x-12 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                        <ArrowUpRight className="h-5 w-5 text-white" />
                     </div>
-                </Link>
-            </Card>
+
+                    {/* Conteúdo do Card */}
+                    <div className="relative z-10 h-full flex flex-col justify-end p-6 text-white">
+                        {IconComponent && <IconComponent className="h-8 w-8 mb-3 text-greenSup drop-shadow-lg" />}
+                        <h3 className="text-2xl font-bold [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]">
+                            {service.title}
+                        </h3>
+                    </div>
+                </div>
+            </Link>
         </motion.div>
     );
 };
@@ -161,9 +93,14 @@ const ServiceCard = ({ service }: { service: Service }) => {
 export default function ServiceCards() {
     return (
         <section className="container py-12 px-4 sm:px-8 mt-6 md:mt-10">
-            <h1 className="text-5xl font-bold text-white mb-8 text-center">Nossos <span className="text-greenSup">Serviços</span></h1>
+            <div className="text-center mb-12">
+                <h2 className="text-5xl font-bold text-white mb-2">Nossos <span className="text-greenSup">Serviços</span></h2>
+                <p className="text-gray-300 max-w-2xl mx-auto">
+                    Do simples ao complexo, oferecemos análises de diversos materiais e produtos utilizando metodologias avançadas.
+                </p>
+            </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {services.map((service) => (
+                {(services as Service[]).map((service) => (
                     <ServiceCard key={service.id} service={service} />
                 ))}
             </div>

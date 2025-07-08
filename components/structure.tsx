@@ -1,51 +1,12 @@
 // NossaEstrutura.tsx
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { motion, useAnimation } from 'framer-motion';
-import Image from 'next/image';
 import { ChevronRight, ChevronLeft, Medal } from 'lucide-react';
-
-interface Slide {
-    id: number;
-    image: string;
-    alt: string;
-}
-
-const slides: Slide[] = [
-    {
-        id: 1,
-        image: "/blog/alto-investimento.webp",
-        alt: "Equipamento de análise"
-    },
-    {
-        id: 2,
-        image: "/blog/analise-rad.webp",
-        alt: "Laboratório Suprema Analítica"
-    },
-    {
-        id: 3,
-        image: "/blog/marco-hist.webp",
-        alt: "Área de trabalho"
-    },
-    {
-        id: 4,
-        image: "/blog/marco-hist2.webp",
-        alt: "Equipamentos modernos"
-    },
-    {
-        id: 5,
-        image: "/blog/marco-hist3.webp",
-        alt: "Laboratório organizado"
-    },
-    {
-        id: 6,
-        image: "/blog/marco-hist4.webp",
-        alt: "Laboratório organizado"
-    }
-];
+import { structureSlides } from '@/lib/data';
 
 export const NossaEstrutura = () => {
     const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -53,113 +14,109 @@ export const NossaEstrutura = () => {
         align: 'start',
     },
         [
-            Autoplay({ delay: 4000, stopOnInteraction: false })
+            Autoplay({ delay: 4000, stopOnInteraction: false, playOnInit: true })
         ]);
 
-    const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
-    const scrollNext = () => emblaApi && emblaApi.scrollNext();
+    const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+    const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
-    const controlsCarousel = useAnimation();
-    const controlsInfo = useAnimation();
-
-    const [refCarousel, inViewCarousel] = useInView({ triggerOnce: true, threshold: 0.4 });
-    const [refInfo, inViewInfo] = useInView({ triggerOnce: true, threshold: 0.4 });
+    const controls = useAnimation();
+    const [ref, inView] = useInView({triggerOnce: true, threshold: 0.2});
 
     useEffect(() => {
-        if (inViewCarousel) controlsCarousel.start({ opacity: 1, y: 0 });
-        if (inViewInfo) controlsInfo.start({ opacity: 1, y: 0 });
-    }, [inViewCarousel, inViewInfo]);
+        if (inView) { 
+            controls.start({ opacity: 1, y: 0 });
+        }
+    }, [inView, controls]);
 
     return (
-        <section className="container flex flex-col justify-center items-center bg-blue-900 text-white mt-6 md:mt-10 py-12 px-4 sm:px-8 rounded-lg select-none">
-            {/* Título */}
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-8">
+        <motion.section
+            ref={ref}
+            initial={{ opacity: 0, y: 50 }}
+            animate={controls}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="container bg-primary-dark text-white mt-6 md:mt-10 py-12 px-4 sm:px-8 rounded-xl"
+        >
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-10">
                 Conheça nossa <span className="text-greenSup">Estrutura</span>
             </h2>
 
             {/* Carrossel de Imagens */}
-            <motion.div
-                ref={refCarousel}
-                initial={{ opacity: 0, y: 50 }}
-                animate={controlsCarousel}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative w-full"
-            >
+            <div className="relative mx-auto max-w-6xl">
                 <div className="embla overflow-hidden rounded-lg" ref={emblaRef}>
                     <div className="embla__container flex">
-                        {slides.map((slide) => (
-                            <motion.div
-                                key={slide.id}
-                                className="embla__slide w-full flex-[0_0_100%] md:flex-[0_0_25%] mx-1 relative"
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <Image
-                                    src={slide.image}
-                                    alt={slide.alt}
-                                    width={1200}
-                                    height={800}
-                                    className="rounded-lg object-cover"
-                                />
-                            </motion.div>
+                        {structureSlides.map((slide) => (
+                            <div key={slide.id} className="embla__slide flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] min-w-0 pl-4">
+                                <div className="h-64 md:h-80 rounded-lg overflow-hidden">
+                                    {/* Tag <img> com otimizações manuais */}
+                                    <img
+                                        src={slide.image}
+                                        alt={slide.alt}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-full w-full object-cover"
+                                    />
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Botões de Navegação */}
-                <button onClick={scrollPrev} className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white text-blue-900 p-1 rounded-full z-10 shadow-md">
-                    <ChevronLeft size={24}></ChevronLeft>
+                {/* Botões de Navegação Aprimorados */}
+                <button
+                    onClick={scrollPrev}
+                    aria-label="Slide anterior"
+                    className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-4 bg-white/80 text-primary p-2 rounded-full z-10 shadow-md transition-all hover:bg-white hover:scale-110 focus:outline-none focus:ring-2 focus:ring-greenSup"
+                >
+                    <ChevronLeft size={28} />
                 </button>
-                <button onClick={scrollNext} className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-blue-900 p-1 rounded-full z-10 shadow-md">
-                    <ChevronRight size={24}></ChevronRight>
+                <button
+                    onClick={scrollNext}
+                    aria-label="Próximo slide"
+                    className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-4 bg-white/80 text-primary p-2 rounded-full z-10 shadow-md transition-all hover:bg-white hover:scale-110 focus:outline-none focus:ring-2 focus:ring-greenSup"
+                >
+                    <ChevronRight size={28} />
                 </button>
-            </motion.div>
+            </div>
 
-            {/* Informações Adicionais */}
-            <motion.div
-                ref={refInfo}
-                initial={{ opacity: 0, y: -50 }}
-                animate={controlsInfo}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="max-w-screen-xl mx-auto mt-12 flex flex-col md:flex-row justify-between items-center"
-            >
-                {/* Texto Sobre a Empresa */}
-                <div className="md:w-1/3 text-center md:text-left">
-                    <Medal size={48} className="mx-auto mb-2" />
-                    <p className="text-lg md:text-xl font-semibold mb-2 text-center">
-                        EMPRESA COMPROMETIDA COM A <span className='text-greenSup'>QUALIDADE</span>, PRESTANDO SERVIÇOS AMBIENTAIS COM PROFISSIONAIS CAPACITADOS PARA ATENDER NOSSOS CLIENTES.
+            {/* Seção de Informações Reestruturada */}
+            <div className="max-w-screen-xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+                {/* Coluna Principal com Texto */}
+                <div className="md:col-span-1 flex flex-col items-center md:items-start gap-4">
+                    <Medal size={48} className="text-greenSup" />
+                    <p className="text-lg font-semibold leading-relaxed">
+                        EMPRESA COMPROMETIDA COM A <span className='text-greenSup'>QUALIDADE</span>, PRESTANDO SERVIÇOS AMBIENTAIS COM PROFISSIONAIS CAPACITADOS.
                     </p>
                 </div>
 
-                {/* Certificação */}
-                <div className="md:w-1/3 text-center">
-                    <Image
-                        src={"/creditacao.webp"}
-                        alt="Certificado de acreditação"
-                        className="mx-auto object-contain"
-                        width={125}
-                        height={100}
-                    />
-                    <p className="text-sm mt-2">
-                        Certificado de acreditação
-                    </p>
+                {/* Coluna de Certificações */}
+                <div className="md:col-span-2 grid grid-cols-2 gap-6 items-center">
+                    <div className="flex flex-col items-center gap-2">
+                        <img
+                            src="/creditacao.webp"
+                            alt="Selo de Acreditação ISO/IEC 17025"
+                            loading="lazy"
+                            decoding="async"
+                            className="h-48 w-auto object-contain"
+                        />
+                        <p className="text-sm text-gray-300">
+                            Acreditação <span className='font-bold'>ISO/IEC 17025</span>
+                        </p>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                         <img
+                            src="/reblas_w.png"
+                            alt="Logotipo REBLAS ANVISA"
+                            loading="lazy"
+                            decoding="async"
+                            className="h-28 w-auto object-contain"
+                        />
+                        <p className="text-sm text-gray-300">
+                            Habilitado pela <span className='font-bold'>ANVISA (REBLAS)</span>
+                        </p>
+                    </div>
                 </div>
-
-                {/* Logo REBLAS */}
-                <div className="md:w-1/3 text-center">
-                    <Image
-                        src="/reblas_w.png"
-                        width={250}
-                        height={200}
-                        alt="Logotipo REBLAS"
-                        className="mx-auto object-contain"
-                    />
-                    <p className="text-sm mt-2">
-                        REBLAS Nº 85 Laboratório Habilitado ANVISA RDC 390/2020
-                    </p>
-                </div>
-            </motion.div>
-        </section>
+            </div>
+        </motion.section>
     );
 };

@@ -53,3 +53,95 @@ export const navServicesItems: { title: string; href: string; description: strin
     description: "Consultoria, laudos técnicos e soluções personalizadas para suas necessidades.",
   },
 ];
+
+export const services = [
+    {
+        id: 1,
+        icon: "Droplet", // Usaremos string para poder mapear para o componente Lucide depois
+        title: "Análise de Água",
+        img: "/services/analise-agua.webp",
+        slug: "/servicos/analise-de-agua",
+    },
+    {
+        id: 2,
+        icon: "Apple",
+        title: "Análise de Alimentos",
+        img: "/services/analise-alimentos.webp",
+        slug: "/servicos/analise-de-alimentos",
+    },
+    {
+        id: 3,
+        icon: "Sprout",
+        title: "Análise de Solo",
+        img: "/services/analise-solo.webp",
+        slug: "/servicos/analise-de-solo",
+    },
+    {
+        id: 4,
+        icon: "Waves",
+        title: "Efluentes",
+        img: "/services/efluentes.webp",
+        slug: "/servicos/efluentes",
+    },
+    {
+        id: 5,
+        icon: "Sparkles",
+        title: "Higienização de Reservatórios",
+        img: "/services/limpeza-higienizacao.webp",
+        slug: "/servicos/limpeza-e-higienizacao",
+    },
+    {
+        id: 6,
+        icon: "Brush",
+        title: "Cosméticos",
+        img: "/services/cosmeticos.webp",
+        slug: "/servicos/cosmeticos",
+    },
+    {
+        id: 7,
+        icon: "TestTubes",
+        title: "Amostragem",
+        img: "/services/amostragem.webp",
+        slug: "/servicos/amostragem",
+    },
+    {
+        id: 8,
+        icon: "Microscope",
+        title: "Outros Serviços",
+        img: "services/outros-servicos.webp",
+        slug: "/servicos/outros-servicos",
+    },
+];
+
+export const structureSlides = [
+    {
+        id: 1,
+        image: "/blog/alto-investimento.webp",
+        alt: "Laboratório da Suprema Analítica com espectrômetro de emissão atômica."
+    },
+    {
+        id: 2,
+        image: "/blog/analise-rad.webp",
+        alt: "Técnica de laboratório preparando amostras em bancada com vidrarias."
+    },
+    {
+        id: 3,
+        image: "/blog/marco-hist.webp",
+        alt: "Área de trabalho do laboratório com equipamentos de análise modernos."
+    },
+    {
+        id: 4,
+        image: "/blog/marco-hist2.webp",
+        alt: "Equipamento cromatógrafo a gás de alta performance em uso."
+    },
+    {
+        id: 5,
+        image: "/blog/marco-hist3.webp",
+        alt: "Vista geral do laboratório limpo e organizado da Suprema Analítica."
+    },
+    {
+        id: 6,
+        image: "/blog/marco-hist4.webp",
+        alt: "Detalhe de um equipamento de análise com frascos de amostra."
+    }
+];

@@ -91,7 +91,7 @@ export const Header = () => {
             height={25}
             alt="Logo Suprema Analítica"
             unoptimized={true}
-            className="w-[150px] md:w-[201px] transition-transform duration-300 hover:scale-105"
+            className="w-[150px] md:w-[201px] transition-transform duration-300 hover:scale-105 sm:p-4"
           />
         </Link>
 
