@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
+import Image from 'next/image';
 import {
   Star,
   CheckCircle,
@@ -14,7 +15,9 @@ import {
   Sparkles,
   BadgeCheck,
   Building,
-  Map} from 'lucide-react';
+  Map,
+  ArrowRight
+} from 'lucide-react';
 
 export default function WhyChooseUs() {
 
@@ -28,11 +31,11 @@ export default function WhyChooseUs() {
     },
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, x: -40 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
-      x: 0,
+      y: 0,
       transition: {
         type: "spring",
         stiffness: 100,
@@ -42,233 +45,212 @@ export default function WhyChooseUs() {
     },
   };
 
-  // Variante para elementos dentro do card
-  const elementVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: (custom: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        ease: "easeOut",
-        duration: 1,
-        delay: custom * 0.25, // Delay sequencial
-      }
-    }),
-  };
-
-  const benefits = [
-    {
-      id: 1,
-      title: "Experiência e Credibilidade Reconhecida",
-      description: "Mais de 20 anos de experiência desde a fundação em 2001, com profissionais de know-how técnico em processos padronizados, com referência nacional e internacional.",
-      icon: Trophy,
-      creditation: true,
-      countUp: true,
-      image: '/equipe.png',
-      alt: "Experiência e Credibilidade Reconhecida"
-    },
-    {
-      id: 2,
-      title: "Ampla Gama de Serviços e métodologias",
-      description: "Do simples ao complexo, oferecemos análises de diversos materiais e produtos utilizando metodologias avançadas.",
-      icon: Layers,
-      badges: ["Cromatografia", "Espectrofotometria", "Ensaio de Imunoabsorção Enzimática", "Cromatografia Líquida de Alta Eficiência", "Espectrometria de Emissão Atômica por Plasma Acoplado Indutivamente"],
-      image: '/services.png',
-      alt: "Ampla Gama de Serviços"
-    },
-    {
-      id: 3,
-      title: "Infraestrutura Moderna",
-      description: "Investimento contínuo em tecnologia e inovações, com equipamentos de última geração em nossa matriz de 700m², atendendo todo o território nacional.",
-      icon: Building,
-      hasMap: true,
-      image: '/infra.png',
-      alt: "Infraestrutura Moderna"
-    },
-    {
-      id: 4,
-      title: "Compromisso com a Qualidade",
-      description: "Nossa preocupação com a qualidade, segurança, competência e compromisso com clientes e parceiros guiam nossa política de melhoria contínua e transparência.",
-      icon: BadgeCheck,
-      valueIcons: [
-        { title: "Satisfação", icon: Users },
-        { title: "Compromisso", icon: CheckCircle },
-        { title: "Inovação", icon: Sparkles }
-      ],
-      image: '/quality.png',
-      alt: "Compromisso com a Qualidade"
-    }
-  ];
-
   return (
-    <section className="container py-12 px-4 sm:px-8 mt-6 md:mt-10 select-none">
-      {/* Título */}
-      <div className="container mx-auto px-4">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="text-center mb-12"
+    <section className="container py-20 px-4 sm:px-8 mt-6 md:mt-10 select-none">
+      {/* Título - Estilo unificado com Nossa Estrutura */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="mb-16"
+      >
+        <motion.h2
+          variants={itemVariants}
+          className="text-4xl md:text-5xl font-bold text-white mb-4"
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-            variants={elementVariants}
-            viewport={{ once: false, amount: 0.2 }}
-            custom={0}
-          >
-            Por que escolher a <span className="text-greenSup">Suprema Analítica</span>?
-          </motion.h2>
+          Por que escolher a <span className="text-greenSup">Suprema Analítica</span>?
+        </motion.h2>
+        <motion.div
+          variants={itemVariants}
+          className="w-20 h-1 bg-greenSup rounded-full mb-6"
+        />
+        <motion.p
+          variants={itemVariants}
+          className="text-gray-300 max-w-2xl text-lg leading-relaxed"
+        >
+          Excelência técnica, tecnologia de ponta e compromisso com resultados precisos para garantir a qualidade do seu produto.
+        </motion.p>
+      </motion.div>
+
+      {/* Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+
+        {/* Card 1: Experiência (2 colunas) */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col justify-between p-8"
+        >
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/equipe.png"
+              alt="Equipe Suprema"
+              fill
+              className="object-cover opacity-30 group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/80 to-transparent" />
+          </div>
+
+          <div className="relative z-10">
+            <div className="w-12 h-12 bg-greenSup/20 rounded-xl flex items-center justify-center mb-6 text-greenSup backdrop-blur-sm border border-greenSup/20">
+              <Trophy size={28} />
+            </div>
+            <h3 className="text-3xl font-bold text-white mb-4">Experiência e Credibilidade</h3>
+            <p className="text-gray-200 max-w-md text-lg">
+              Mais de 20 anos de história, construindo uma reputação sólida com know-how técnico e referência nacional.
+            </p>
+          </div>
+
+          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4">
+              <div className="flex items-center gap-2 text-greenSup mb-1">
+                <Star size={20} />
+                <span className="font-bold text-2xl">
+                  <CountUp end={20} duration={2.5} prefix="+" />
+                </span>
+              </div>
+              <p className="text-sm text-gray-300 font-medium">Anos de Mercado</p>
+            </div>
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4">
+              <div className="flex items-center gap-2 text-greenSup mb-1">
+                <UserCheck size={20} />
+                <span className="font-bold text-2xl">
+                  <CountUp end={1000} duration={2.5} prefix="+" />
+                </span>
+              </div>
+              <p className="text-sm text-gray-300 font-medium">Clientes Atendidos</p>
+            </div>
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-4">
+              <div className="flex items-center gap-2 text-greenSup mb-1">
+                <Microscope size={20} />
+                <span className="font-bold text-2xl">
+                  <CountUp end={10000} duration={2.5} prefix="+" />
+                </span>
+              </div>
+              <p className="text-sm text-gray-300 font-medium">Análises Realizadas</p>
+            </div>
+          </div>
         </motion.div>
 
-        {/* Map com os CARDS */}
-        <div className="flex flex-col gap-8 mb-12">
-          {benefits.map((benefit) => (
-            <motion.div
-              key={benefit.id}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: .4 }}
-              className="flex flex-col xl:flex-row border-2 border-primary-light/70 bg-primary-dark shadow-lg p-6 rounded-xl"
-            >
-              <div className="flex flex-col lg:flex-row items-start gap-4">
-                <div className='flex flex-col'>
-                  <div>
-                    <motion.h3
-                      variants={elementVariants}
-                      custom={1}
-                      className="flex gap-4 text-2xl items-center md:text-4xl font-bold text-white mb-2"
-                    >
-                      <motion.div
-                        variants={elementVariants}
-                        custom={0}
-                        className="bg-primary/10 border-2 border-primary-light/70 p-3 rounded-lg h-fit"
-                      >
-                        <benefit.icon size={24} className="text-greenSup" />
-                      </motion.div>
-                      {benefit.title}
-                    </motion.h3>
-                    <motion.p
-                      variants={elementVariants}
-                      custom={2}
-                      className="text-gray-400 mb-4 text-sm"
-                    >
-                      {benefit.description}
-                    </motion.p>
-                    {/* CountUps primeiro card */}
-                    {benefit.countUp && (
-                      <motion.div
-                        variants={elementVariants}
-                        custom={3}
-                        className="flex flex-col lg:flex-row text-3xl text-white gap-4 flex-grow"
-                      >
-                        <motion.div
-                          variants={elementVariants}
-                          custom={4}
-                          className='lg:w-1/3 border-2 border-primary/50 rounded-lg p-2 shadow-md flex flex-col items-center justify-center text-center gap-1'
-                        >
-                          <div className="bg-primary/50 p-3 rounded-full size-fit">
-                            <Star size={24} className='text-greenSup' />
-                          </div>
-                          <CountUp
-                            end={20}
-                            duration={3}
-                            className='text-greenSup font-bold text-lg lg:text-2xl'
-                            prefix='+'
-                            suffix=' anos de mercado'
-                            enableScrollSpy={true}
-                            scrollSpyDelay={300}
-                          />
-                        </motion.div>
+        {/* Card 2: Qualidade (1 coluna) */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-greenSup/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                        <motion.div
-                          className='lg:w-1/3 border-2 border-primary/50 rounded-lg p-2 shadow-md flex flex-col items-center justify-center text-center gap-1'
-                          variants={elementVariants}
-                          custom={5}
-                        >
-                          <div className="bg-primary/50 p-3 rounded-full size-fit">
-                            <UserCheck size={24} className='text-greenSup' />
-                          </div>
-                          <CountUp
-                            end={1000}
-                            duration={2.5}
-                            className='text-greenSup font-bold text-lg lg:text-2xl'
-                            prefix='+'
-                            suffix=' clientes atendidos'
-                            enableScrollSpy={true}
-                          />
-                        </motion.div>
+          <div className="w-12 h-12 bg-greenSup/20 rounded-xl flex items-center justify-center mb-6 text-greenSup backdrop-blur-sm border border-greenSup/20">
+            <BadgeCheck size={28} />
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-4">Compromisso com a Qualidade</h3>
+          <p className="text-gray-300 mb-8">
+            Política rigorosa de melhoria contínua e transparência em todos os processos.
+          </p>
 
-                        <motion.div
-                          className='lg:w-1/3 border-2 border-primary/50 rounded-lg p-2 shadow-md flex flex-col items-center justify-center text-center gap-1'
-                          variants={elementVariants}
-                          custom={6}
-                        >
-                          <div className="bg-primary/50 p-3 rounded-full size-fit">
-                            <Microscope size={24} className='text-greenSup' />
-                          </div>
-                          <CountUp
-                            end={10000}
-                            duration={2.8}
-                            className='text-greenSup font-bold text-lg lg:text-2xl'
-                            prefix='+'
-                            suffix=' análises realizadas'
-                            enableScrollSpy={true}
-                          />
-                        </motion.div>
-                      </motion.div>
-                    )}
-                  </div>
-
-                  {benefit.badges && (
-                    <div
-                      className="flex flex-wrap gap-2">
-                      {benefit.badges.map((badge, index) => (
-                        <motion.span
-                          variants={elementVariants}
-                          custom={3}
-                          key={index}
-                          className="border-primary/50 border-2 text-greenSup px-3 py-1 rounded-full text-sm font-medium"
-                        >
-                          {badge}
-                        </motion.span>
-                      ))}
-                    </div>
-                  )}
-
-                  {benefit.valueIcons && (
-                    <div className="mt-4 flex justify-between">
-                      {benefit.valueIcons.map((value, index) => (
-                        <motion.div 
-                          variants={elementVariants}
-                          custom={3}
-                          key={index} 
-                          className="flex flex-col items-center">
-                          <div className="bg-primary/50 p-3 rounded-full">
-                            <value.icon size={20} className="text-greenSup" />
-                          </div>
-                          <span className="text-greenSup text-xs sm:text-base font-medium">{value.title}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
-
-                  {benefit.hasMap && (
-                    <div className="mt-4 flex items-center justify-center bg-primary/5 p-4 rounded-lg">
-                      <Map size={80} className="text-primary opacity-40" />
-                      <div className="ml-4">
-                        <h4 className="font-bold text-primary">Atendimento Nacional</h4>
-                        <p className="text-sm text-gray-600">Serviços disponíveis em todo o território brasileiro</p>
-                      </div>
-                    </div>
-                  )}
+          <div className="mt-auto space-y-4">
+            {[
+              { icon: Users, text: "Satisfação Garantida" },
+              { icon: CheckCircle, text: "Compromisso Real" },
+              { icon: Sparkles, text: "Inovação Constante" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                <div className="text-greenSup">
+                  <item.icon size={20} />
                 </div>
+                <span className="text-white font-medium">{item.text}</span>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Card 3: Serviços (1 coluna) */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10" />
+
+          <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 text-blue-400 backdrop-blur-sm border border-blue-500/20">
+            <Layers size={28} />
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-4">Metodologias Avançadas</h3>
+          <p className="text-gray-300 mb-6">
+            Do simples ao complexo, dominamos diversas técnicas analíticas.
+          </p>
+
+          <div className="space-y-3">
+            {["Cromatografia", "Espectrofotometria", "Imunoabsorção", "HPLC", "ICP-OES"].map((tech, i) => (
+              <div key={i} className="flex items-center gap-3 text-gray-300 text-sm">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                {tech}
+              </div>
+            ))}
+          </div>
+          <div className="mt-auto pt-6">
+            <button className="text-blue-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+              Ver todos os serviços <ArrowRight size={16} />
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Card 4: Infraestrutura (2 colunas) */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col md:flex-row items-center"
+        >
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/infra.png"
+              alt="Infraestrutura"
+              fill
+              className="object-cover opacity-30 group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/90 to-transparent" />
+          </div>
+
+          <div className="relative z-10 p-8 w-full md:w-1/2">
+            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 text-purple-400 backdrop-blur-sm border border-purple-500/20">
+              <Building size={28} />
+            </div>
+            <h3 className="text-3xl font-bold text-white mb-4">Infraestrutura Moderna</h3>
+            <p className="text-gray-300 mb-6">
+              Matriz com 700m² e equipamentos de última geração. Investimento contínuo em tecnologia para garantir a melhor performance.
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 text-white bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10">
+                <Map size={18} className="text-purple-400" />
+                <span className="font-medium">Atendimento Nacional</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Map Visualization (Abstract) */}
+          <div className="relative z-10 w-full md:w-1/2 h-64 md:h-full flex items-center justify-center p-8">
+            <div className="relative w-full h-full max-w-xs opacity-80">
+              <Map size={200} className="text-white/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-150" />
+              {/* Pontos pulsantes representando cobertura */}
+              <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-greenSup rounded-full animate-ping" />
+              <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+              <div className="absolute bottom-1/3 right-1/3 w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-75" />
+              <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse delay-150" />
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

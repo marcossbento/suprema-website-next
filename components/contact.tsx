@@ -177,7 +177,7 @@ export default function ContactSection() {
     <section ref={ref} className="container py-12 px-4 sm:px-8 mt-6 md:mt-10 bg-primary-dark rounded-lg">
       <div className="container mx-auto">
         <motion.div
-        key={`first-div-${2}`}
+          key={`first-div-${2}`}
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -185,7 +185,7 @@ export default function ContactSection() {
         >
           <motion.h1 variants={titleVariants} className="text-5xl font-bold text-white mb-8 text-center">Entre em <span className="text-greenSup">Contato</span></motion.h1>
           <motion.p variants={titleVariants} className="text-gray-300 max-w-2xl mx-auto">
-            Estamos à disposição para ajudar com suas dúvidas, solicitações de análises ou agendar visitas técnicas.
+            Fale com nossos especialistas e garanta a qualidade das suas análises hoje mesmo.
           </motion.p>
         </motion.div>
 
@@ -196,21 +196,21 @@ export default function ContactSection() {
           animate={inView ? "visible" : "hidden"}
           className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-4"
         >
-            {contactCards.map((card, index:number) => (
-              <ContactCard
-                key={card.id}
-                data={card}
-                variants={{
-                  ...cardVariants,
-                  visible: {
-                    ...cardVariants.visible,
-                    transition: {
-                      ...cardVariants.visible.transition,
-                    }
+          {contactCards.map((card, index: number) => (
+            <ContactCard
+              key={card.id}
+              data={card}
+              variants={{
+                ...cardVariants,
+                visible: {
+                  ...cardVariants.visible,
+                  transition: {
+                    ...cardVariants.visible.transition,
                   }
-                }}
-              />
-            ))}
+                }
+              }}
+            />
+          ))}
         </motion.div>
       </div>
     </section >
