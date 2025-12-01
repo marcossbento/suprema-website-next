@@ -71,8 +71,8 @@ export const Header = () => {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 flex justify-between items-center transition-all duration-300 ease-in-out",
             isScrolled
-            ? 'h-14 bg-white/80 shadow-md backdrop-blur-sm px-4' // Header compactado
-            : 'h-20 bg-white/90 px-4'//Header no topo
+            ? 'h-14 bg-white/95 shadow-md backdrop-blur-sm px-4' // Header compactado
+            : 'h-20 bg-white px-4'//Header no topo
         )}
         initial={{ y: -100 }}
         animate={{
@@ -155,10 +155,15 @@ export const Header = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Botão Área do Cliente */}
-        <div className="hidden md:flex items-center">
+        {/* Botões de Ação */}
+        <div className="hidden md:flex items-center gap-4">
+           <Link href="#contato">
+            <Button className="rounded-full bg-greenSup text-white font-bold transition-all duration-300 hover:bg-greenSup-dark hover:scale-105 shadow-md">
+              Solicitar Orçamento
+            </Button>
+          </Link>
           <Link href={"https://portal.mylimsweb.cloud/Login"} target="_blank" rel="noopener noreferrer">
-            <Button className="rounded-full bg-primary text-white font-bold transition-all duration-300 hover:bg-primary-dark hover:scale-105">
+            <Button variant="outline" className="rounded-full border-primary text-primary font-bold transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105">
               Área do Cliente
             </Button>
           </Link>  
@@ -241,11 +246,18 @@ export const Header = () => {
                 </Link>
               </div>
 
-              {/* Botão Área do Cliente */}
-              <div className="mt-6">
-                <Button className="w-full py-6 rounded-full bg-primary text-white font-bold hover:bg-primary/90">
-                  Área do Cliente
-                </Button>
+              {/* Botões de Ação */}
+              <div className="mt-6 flex flex-col gap-4">
+                <Link href="#contato">
+                    <Button className="w-full py-6 rounded-full bg-greenSup text-white font-bold hover:bg-greenSup-dark shadow-md">
+                    Solicitar Orçamento
+                    </Button>
+                </Link>
+                <Link href="https://portal.mylimsweb.cloud/Login" target="_blank">
+                    <Button variant="outline" className="w-full py-6 rounded-full border-primary text-primary font-bold hover:bg-primary hover:text-white">
+                    Área do Cliente
+                    </Button>
+                </Link>
               </div>
             </SheetContent>
           </Sheet>

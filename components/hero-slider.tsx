@@ -6,6 +6,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import Fade from 'embla-carousel-fade';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { ShieldCheck, Zap, Clock, Apple, Wheat, Package } from 'lucide-react';
 
 interface Slide {
   id: number;
@@ -15,6 +16,8 @@ interface Slide {
   subtitle?: string;
   acreditacaoImg?: string;
   acreditacaoAlt?: string;
+  features?: { icon: React.ElementType, text: string }[];
+  tags?: { icon: React.ElementType, text: string }[];
 }
 
 const slides: Slide[] = [
@@ -22,8 +25,13 @@ const slides: Slide[] = [
     id: 1,
     image: "/microscopio2.webp",
     alt: "Microscópio no laboratório",
-    title: "O laboratório N°1 em análises.",
-    subtitle: "Somos especializados na prestação de serviços de análises e tratamento de água com o mais alto nível de comprometimento e qualidade",
+    title: "Excelência em Análises Ambientais para sua Segurança e Conformidade.",
+    subtitle: "Tecnologia de ponta e equipe qualificada para garantir a qualidade da sua água e alimentos.",
+    features: [
+      { icon: ShieldCheck, text: "Alta Precisão" },
+      { icon: Zap, text: "Tecnologia de Ponta" },
+      { icon: Clock, text: "Atendimento Ágil" }
+    ]
   },
   {
     id: 2,
@@ -39,6 +47,11 @@ const slides: Slide[] = [
     alt: "Análise de alimentos",
     title: "Análise de Alimentos",
     subtitle: "In natura, processados e ultraprocessados",
+    tags: [
+      { icon: Apple, text: "In Natura" },
+      { icon: Wheat, text: "Processados" },
+      { icon: Package, text: "Ultraprocessados" }
+    ]
   }
 ]
 
@@ -78,56 +91,175 @@ export const EmblaCarousel = () => {
               sizes="(max-width: 768px) 100vw, 50vw"
               priority={index === 0}
               unoptimized
-              className='object-cover opacity-60'
+              className='object-cover'
             />
-            <div className="absolute inset-0 px-2 text-center flex flex-col items-center justify-center select-none text-white font-bold [text-shadow:_0_1px_5px_#000000]">
-              <motion.h1
-                className={`text-4xl md:text-7xl text-center mb-4`}
-                initial={{ opacity: 0, y: -50 }}
-                animate={currentIndex === index ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
-                transition={{ duration: 0.5 }}
-              >
-                {slide.title}
-              </motion.h1>
-              {/* Condicional: h2 OU imagem Creditação */}
-              {slide.acreditacaoImg ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={currentIndex === index ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.5 }}
-                  className="mt-4 flex flex-col items-center"
+            {/* Gradient Overlay: Bottom-to-top (Mobile) / Left-to-right (Desktop) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b45] via-[#0e1b45]/50 to-transparent md:bg-gradient-to-r md:from-[#0e1b45] md:via-[#0e1b45]/80 md:to-transparent" />
+
+            {/* Content Grid */}
+            <div className="absolute inset-0 px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center">
+
+              {/* Left Column: Text & CTA */}
+              <div className="flex flex-col justify-center items-center md:items-start h-full text-center md:text-left select-none text-white font-bold">
+                <motion.h1
+                  className={`text-3xl md:text-6xl lg:text-7xl mb-4 md:mb-6 max-w-3xl leading-tight`}
+                  initial={{ opacity: 0, x: -100 }}
+                  animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                  <Image
-                    src={slide.acreditacaoImg}
-                    alt={slide.acreditacaoAlt || 'Credenciamento'}
-                    width={125}
-                    height={208}
-                    className=" md:w-[200px]"
-                  />
-                  <Link
+                  {slide.title}
+                </motion.h1>
+
+                {/* Condicional: Se tiver imagem de acreditação */}
+                {slide.acreditacaoImg ? (
+                  <motion.div
+                    initial={{ opacity: 0, x: -100 }}
+                    animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+                    transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+                    className="flex flex-col items-center md:items-start"
+                  >
+                    {/* Imagem Mobile (Escondida no Desktop) - Reduzida e Ajustada */}
+                    <div className="md:hidden mb-6">
+                      <a href="http://www.inmetro.gov.br/laboratorios/rble/docs/CRL1546.pdf" target="_blank" rel="noopener noreferrer">
+                        <Image
+                          src={slide.acreditacaoImg}
+                          alt={slide.acreditacaoAlt || 'Credenciamento'}
+                          width={100}
+                          height={166}
+                          className="object-contain w-28 drop-shadow-lg"
+                        />
+                      </a>
+                    </div>
+
+                    <Link
                       href="/contato"
-                      className="w-fit inline-block mt-6 px-8 py-3 bg-primary text-white rounded-full text-lg font-semibold shadow-lg hover:bg-primary-dark transition-all duration-300"
+                      className="w-fit inline-block px-6 py-3 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-base md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
                     >
                       Entre em Contato
                     </Link>
-                </motion.div>
-              ) : (
-                // Subtítulo
-                <motion.h2
-                  className={`flex flex-col items-center text-md text-white/70 md:text-2xl ${index === 1 ? 'text-2xl' : ''}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={currentIndex === index ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {slide.subtitle}
-                  <Link
-                    href="/contato"
-                    className="w-fit inline-block mt-6 px-8 py-3 bg-primary text-white rounded-full text-lg font-semibold shadow-lg hover:bg-primary-dark transition-all duration-300"
+                  </motion.div>
+                ) : (
+                  // Subtítulo (Se NÃO tiver imagem de acreditação)
+                  <motion.div
+                    className={`flex flex-col items-center md:items-start`}
+                    initial={{ opacity: 0, x: -100 }}
+                    animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+                    transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                   >
-                    Entre em Contato
-                  </Link>
-                </motion.h2>
-              )}
+                    <h2 className={`text-base md:text-2xl text-gray-200 max-w-2xl mb-6 md:mb-8 font-medium`}>
+                      {slide.subtitle}
+                    </h2>
+
+                    {/* Features Mobile (Slide 1) */}
+                    {slide.features && (
+                      <div className="flex flex-wrap justify-center gap-3 mb-8 md:hidden">
+                        {slide.features.map((feature, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-full">
+                            <div className="text-greenSup">
+                              <feature.icon size={16} />
+                            </div>
+                            <span className="text-white text-xs font-bold">{feature.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Tags Mobile (Slide 3) */}
+                    {slide.tags && (
+                      <div className="flex flex-wrap justify-center gap-3 mb-8 md:hidden">
+                        {slide.tags.map((tag, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-full"
+                          >
+                            <div className="text-greenSup">
+                              <tag.icon size={16} />
+                            </div>
+                            <span className="text-white text-xs font-bold">{tag.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <Link
+                      href="/contato"
+                      className="w-fit inline-block px-6 py-3 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-base md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
+                    >
+                      Entre em Contato
+                    </Link>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Right Column: Visuals (Desktop Only) */}
+              <div className="hidden md:flex justify-center items-center h-full">
+                {/* Acreditação */}
+                {slide.acreditacaoImg && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                  >
+                    <a href="http://www.inmetro.gov.br/laboratorios/rble/docs/CRL1546.pdf" target="_blank" rel="noopener noreferrer">
+                      <Image
+                        src={slide.acreditacaoImg}
+                        alt={slide.acreditacaoAlt || 'Credenciamento'}
+                        width={300}
+                        height={500}
+                        className="drop-shadow-2xl object-contain max-h-[60vh] hover:scale-105 transition-transform duration-300"
+                      />
+                    </a>
+                  </motion.div>
+                )}
+
+                {/* Features (Slide 1) */}
+                {slide.features && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                    className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-2xl max-w-sm"
+                  >
+                    <h3 className="text-white text-xl font-bold mb-6 border-b border-white/20 pb-2">Nossos Diferenciais</h3>
+                    <div className="flex flex-col gap-6">
+                      {slide.features.map((feature, i) => (
+                        <div key={i} className="flex items-center gap-4 text-white">
+                          <div className="p-3 bg-greenSup/20 rounded-full text-greenSup">
+                            <feature.icon size={24} />
+                          </div>
+                          <span className="text-lg font-medium">{feature.text}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Tags (Slide 3) */}
+                {slide.tags && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                    className="flex flex-col gap-4"
+                  >
+                    {slide.tags.map((tag, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+                        transition={{ duration: 0.5, delay: 0.3 + (i * 0.1), ease: "easeOut" }}
+                        className="flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-full shadow-xl hover:bg-white/20 transition-colors cursor-default"
+                      >
+                        <div className="text-greenSup">
+                          <tag.icon size={28} />
+                        </div>
+                        <span className="text-white text-xl font-bold">{tag.text}</span>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+
             </div>
           </div>
         ))}
