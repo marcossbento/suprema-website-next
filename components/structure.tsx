@@ -1,9 +1,9 @@
+"use client"
 // NossaEstrutura.tsx
-import React, { useCallback, useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React, { useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Medal, CheckCircle2 } from 'lucide-react';
 import { structureSlides } from '@/lib/data';
 import Image from 'next/image';
@@ -20,17 +20,47 @@ export const NossaEstrutura = () => {
     const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
     const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
-    const controls = useAnimation();
-    const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
-
-    useEffect(() => {
-        if (inView) {
-            controls.start({ opacity: 1, y: 0 });
+    // Animation Variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.1
+            }
         }
-    }, [inView, controls]);
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 50,
+                damping: 20
+            }
+        }
+    };
+
+    const carouselVariants = {
+        hidden: { opacity: 0, x: 50 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: {
+                type: "spring",
+                stiffness: 40,
+                damping: 20,
+                delay: 0.4
+            }
+        }
+    };
 
     return (
-        <section className="relative py-20 md:py-24">
+        <section className="relative py-20 md:py-24 overflow-hidden">
             {/* Background with Gradient and Texture - Rounded on Desktop */}
             <div className="absolute inset-0 md:inset-x-4 lg:inset-x-8 md:rounded-[2.5rem] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-dark via-[#0e1b45] to-primary-dark z-0" />
@@ -38,40 +68,48 @@ export const NossaEstrutura = () => {
             </div>
 
             <motion.div
-                ref={ref}
-                initial={{ opacity: 0, y: 50 }}
-                animate={controls}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={containerVariants}
                 className="container relative z-10 px-6 md:px-12 lg:px-20 mx-auto"
             >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                     {/* Left Column: Content & Trust */}
                     <div className="flex flex-col gap-8 text-white">
-                        <div>
+                        <motion.div variants={itemVariants}>
                             <h2 className="text-4xl md:text-5xl font-bold mb-4">
                                 Conheça nossa <span className="text-greenSup">Estrutura</span>
                             </h2>
-                            <div className="w-20 h-1 bg-greenSup rounded-full" />
-                        </div>
+                            <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: 80 }}
+                                transition={{ duration: 0.8, delay: 0.5 }}
+                                className="h-1 bg-greenSup rounded-full"
+                            />
+                        </motion.div>
 
-                        <div className="flex items-start gap-4">
+                        <motion.div variants={itemVariants} className="flex items-start gap-4">
                             <div className="p-3 bg-white/10 rounded-full text-greenSup shrink-0">
                                 <Medal size={32} />
                             </div>
                             <p className="text-lg md:text-xl text-gray-200 leading-relaxed font-light">
                                 Empresa comprometida com a <strong className="text-white font-bold">QUALIDADE</strong>, prestando serviços ambientais com profissionais altamente capacitados e tecnologia de ponta.
                             </p>
-                        </div>
+                        </motion.div>
 
                         {/* Certifications Badges */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                             {/* Badge 1 - With Link */}
-                            <a
+                            <motion.a
+                                variants={itemVariants}
+                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+                                whileTap={{ scale: 0.98 }}
                                 href="http://www.inmetro.gov.br/laboratorios/rble/docs/CRL1546.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer"
+                                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl transition-colors group cursor-pointer"
                             >
                                 <div className="relative w-24 h-24 shrink-0 bg-white rounded-lg p-2 flex items-center justify-center">
                                     <Image
@@ -87,10 +125,14 @@ export const NossaEstrutura = () => {
                                     <p className="text-sm font-bold text-white">ISO/IEC 17025</p>
                                     <p className="text-xs text-gray-400">CRL 1546</p>
                                 </div>
-                            </a>
+                            </motion.a>
 
                             {/* Badge 2 */}
-                            <div className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl hover:bg-white/10 transition-colors group">
+                            <motion.div
+                                variants={itemVariants}
+                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+                                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl transition-colors group"
+                            >
                                 <div className="relative w-24 h-24 shrink-0 bg-white rounded-lg p-2 flex items-center justify-center">
                                     <Image
                                         src="/logoReblas.webp"
@@ -105,15 +147,23 @@ export const NossaEstrutura = () => {
                                     <p className="text-sm font-bold text-white">ANVISA (REBLAS)</p>
                                     <p className="text-xs text-gray-400">REBLAS N° 85 Laboratório Habilitado ANVISA RDC 390/2020</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
 
                     {/* Right Column: Visual Carousel */}
-                    <div className="relative">
+                    <motion.div variants={carouselVariants} className="relative">
                         {/* Decorative Elements */}
-                        <div className="absolute -top-10 -right-10 w-40 h-40 bg-greenSup/20 rounded-full blur-3xl" />
-                        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl" />
+                        <motion.div
+                            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -top-10 -right-10 w-40 h-40 bg-greenSup/20 rounded-full blur-3xl"
+                        />
+                        <motion.div
+                            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
+                            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                            className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"
+                        />
 
                         <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900">
                             <div className="embla" ref={emblaRef}>
@@ -142,22 +192,26 @@ export const NossaEstrutura = () => {
                             </div>
 
                             {/* Navigation Buttons */}
-                            <button
+                            <motion.button
+                                whileHover={{ scale: 1.1, backgroundColor: "rgba(34, 197, 94, 1)" }}
+                                whileTap={{ scale: 0.9 }}
                                 onClick={scrollPrev}
-                                className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 hover:bg-greenSup text-white p-3 rounded-full backdrop-blur-sm transition-all shadow-lg"
+                                className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-shadow shadow-lg"
                                 aria-label="Anterior"
                             >
                                 <ChevronLeft size={24} />
-                            </button>
-                            <button
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.1, backgroundColor: "rgba(34, 197, 94, 1)" }}
+                                whileTap={{ scale: 0.9 }}
                                 onClick={scrollNext}
-                                className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 hover:bg-greenSup text-white p-3 rounded-full backdrop-blur-sm transition-all shadow-lg"
+                                className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-shadow shadow-lg"
                                 aria-label="Próximo"
                             >
                                 <ChevronRight size={24} />
-                            </button>
+                            </motion.button>
                         </div>
-                    </div>
+                    </motion.div>
 
                 </div>
             </motion.div>

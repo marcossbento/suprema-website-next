@@ -17,7 +17,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { navAboutItems, navServicesItems } from "@/lib/data"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { Menu } from "lucide-react"
+import { Menu, ChevronRight } from "lucide-react"
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
@@ -94,7 +94,7 @@ export const Header = () => {
               unoptimized={true}
               className={cn(
                 "h-auto transition-all duration-500 ease-in-out",
-                isScrolled ? "w-[120px] md:w-[160px]" : "w-[140px] md:w-[200px]"
+                isScrolled ? "w-[130px] md:w-[160px]" : "w-[160px] md:w-[200px]" // Increased mobile logo size
               )}
             />
           </Link>
@@ -214,14 +214,15 @@ export const Header = () => {
                       Sobre nós
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className="flex flex-col space-y-1 pl-4 border-l-2 border-primary/10 ml-1">
+                      <div className="flex flex-col space-y-2 pl-4 border-l-2 border-primary/10 ml-1">
                         {navAboutItems.map((item) => (
                           <Link
                             key={item.title}
                             href={item.href}
-                            className="py-2.5 text-base text-muted-foreground hover:text-primary transition-colors block"
+                            className="flex items-center justify-between py-3 text-base font-medium text-foreground hover:text-greenSup transition-colors group"
                           >
                             {item.title}
+                            <ChevronRight size={16} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
                           </Link>
                         ))}
                       </div>
@@ -234,14 +235,15 @@ export const Header = () => {
                       Serviços
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className="flex flex-col space-y-1 pl-4 border-l-2 border-primary/10 ml-1">
+                      <div className="flex flex-col space-y-2 pl-4 border-l-2 border-primary/10 ml-1">
                         {navServicesItems.map((service) => (
                           <Link
                             key={service.title}
                             href={service.href}
-                            className="py-2.5 text-base text-muted-foreground hover:text-primary transition-colors block"
+                            className="flex items-center justify-between py-3 text-base font-medium text-foreground hover:text-greenSup transition-colors group"
                           >
                             {service.title}
+                            <ChevronRight size={16} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
                           </Link>
                         ))}
                       </div>
@@ -250,12 +252,13 @@ export const Header = () => {
                 </Accordion>
 
                 {/* Links diretos */}
-                <div className="mt-2">
+                <div className="mt-2 border-t border-border/40 pt-2">
                   <Link
                     href="/contato"
-                    className="block py-4 text-lg font-semibold text-primary hover:text-greenSup transition-colors"
+                    className="flex items-center justify-between py-4 text-lg font-semibold text-primary hover:text-greenSup transition-colors group"
                   >
                     Contato
+                    <ChevronRight size={20} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
                   </Link>
                 </div>
 
