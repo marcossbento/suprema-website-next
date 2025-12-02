@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   Star,
   CheckCircle,
@@ -78,22 +79,13 @@ export default function WhyChooseUs() {
 
         {/* Card 1: Experiência (2 colunas) */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col justify-between p-8"
         >
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/equipe.png"
-              alt="Equipe Suprema"
-              fill
-              className="object-cover opacity-30 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/80 to-transparent" />
-          </div>
+
 
           <div className="relative z-10">
             <div className="w-12 h-12 bg-greenSup/20 rounded-xl flex items-center justify-center mb-6 text-greenSup backdrop-blur-sm border border-greenSup/20">
@@ -138,10 +130,10 @@ export default function WhyChooseUs() {
 
         {/* Card 2: Qualidade (1 coluna) */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-greenSup/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -172,10 +164,10 @@ export default function WhyChooseUs() {
 
         {/* Card 3: Serviços (1 coluna) */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10" />
@@ -197,18 +189,18 @@ export default function WhyChooseUs() {
             ))}
           </div>
           <div className="mt-auto pt-6">
-            <button className="text-blue-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+            <Link href="#servicos" className="text-blue-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
               Ver todos os serviços <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         </motion.div>
 
         {/* Card 4: Infraestrutura (2 colunas) */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col md:flex-row items-center"
         >
           {/* Background Image */}

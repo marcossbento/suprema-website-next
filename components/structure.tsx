@@ -103,7 +103,7 @@ export const NossaEstrutura = () => {
                                 <div>
                                     <p className="text-xs text-greenSup font-bold uppercase tracking-wider mb-1">Habilitação</p>
                                     <p className="text-sm font-bold text-white">ANVISA (REBLAS)</p>
-                                    <p className="text-xs text-gray-400">Reconhecimento</p>
+                                    <p className="text-xs text-gray-400">REBLAS N° 85 Laboratório Habilitado ANVISA RDC 390/2020</p>
                                 </div>
                             </div>
                         </div>

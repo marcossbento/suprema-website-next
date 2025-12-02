@@ -80,7 +80,7 @@ export const EmblaCarousel = () => {
   }, [emblaApi]);
 
   return (
-    <div className="embla w-full h-[80vh] bg-black md:h-screen" ref={emblaRef}>
+    <div className="embla w-full h-[80vh] bg-black md:h-screen overflow-hidden" ref={emblaRef}>
       <div className="embla__container h-[80vh] flex flex-row md:h-screen">
         {slides.map((slide, index) => (
           <div key={slide.id} className="embla__slide flex flex-[0_0_100%] object-none relative">
