@@ -100,9 +100,9 @@ export const EmblaCarousel = () => {
             <div className="absolute inset-0 px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center">
 
               {/* Left Column: Text & CTA */}
-              <div className="flex flex-col justify-center items-center md:items-start h-full text-center md:text-left select-none text-white font-bold">
+              <div className="flex flex-col justify-center items-start h-full text-left select-none text-white font-bold">
                 <motion.h1
-                  className={`text-3xl md:text-6xl lg:text-7xl mb-4 md:mb-6 max-w-3xl leading-tight`}
+                  className={`text-3xl md:text-6xl lg:text-7xl mb-3 md:mb-6 max-w-3xl leading-tight`} // Increased mobile size
                   initial={{ opacity: 0, x: -100 }}
                   animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
@@ -116,24 +116,24 @@ export const EmblaCarousel = () => {
                     initial={{ opacity: 0, x: -100 }}
                     animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
                     transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                    className="flex flex-col items-center md:items-start"
+                    className="flex flex-col items-start"
                   >
                     {/* Imagem Mobile (Escondida no Desktop) - Reduzida e Ajustada */}
-                    <div className="md:hidden mb-6">
+                    <div className="md:hidden mb-4">
                       <a href="http://www.inmetro.gov.br/laboratorios/rble/docs/CRL1546.pdf" target="_blank" rel="noopener noreferrer">
                         <Image
                           src={slide.acreditacaoImg}
                           alt={slide.acreditacaoAlt || 'Credenciamento'}
                           width={100}
                           height={166}
-                          className="object-contain w-28 drop-shadow-lg"
+                          className="object-contain w-24 drop-shadow-lg"
                         />
                       </a>
                     </div>
 
                     <Link
                       href="/contato"
-                      className="w-fit inline-block px-6 py-3 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-base md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
+                      className="w-fit inline-block px-5 py-2.5 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-sm md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
                     >
                       Entre em Contato
                     </Link>
@@ -141,22 +141,22 @@ export const EmblaCarousel = () => {
                 ) : (
                   // Subtítulo (Se NÃO tiver imagem de acreditação)
                   <motion.div
-                    className={`flex flex-col items-center md:items-start`}
+                    className={`flex flex-col items-start`}
                     initial={{ opacity: 0, x: -100 }}
                     animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
                     transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                   >
-                    <h2 className={`text-base md:text-2xl text-gray-200 max-w-2xl mb-6 md:mb-8 font-medium`}>
+                    <h2 className={`text-base md:text-2xl text-gray-200 max-w-2xl mb-5 md:mb-8 font-medium`}>
                       {slide.subtitle}
                     </h2>
 
                     {/* Features Mobile (Slide 1) */}
                     {slide.features && (
-                      <div className="flex flex-wrap justify-center gap-3 mb-8 md:hidden">
+                      <div className="flex flex-wrap justify-start gap-2 mb-6 md:hidden">
                         {slide.features.map((feature, i) => (
-                          <div key={i} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-full">
+                          <div key={i} className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 px-2.5 py-1.5 rounded-full">
                             <div className="text-greenSup">
-                              <feature.icon size={16} />
+                              <feature.icon size={14} />
                             </div>
                             <span className="text-white text-xs font-bold">{feature.text}</span>
                           </div>
@@ -166,14 +166,14 @@ export const EmblaCarousel = () => {
 
                     {/* Tags Mobile (Slide 3) */}
                     {slide.tags && (
-                      <div className="flex flex-wrap justify-center gap-3 mb-8 md:hidden">
+                      <div className="flex flex-wrap justify-start gap-2 mb-6 md:hidden">
                         {slide.tags.map((tag, i) => (
                           <div
                             key={i}
-                            className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-full"
+                            className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 px-2.5 py-1.5 rounded-full"
                           >
                             <div className="text-greenSup">
-                              <tag.icon size={16} />
+                              <tag.icon size={14} />
                             </div>
                             <span className="text-white text-xs font-bold">{tag.text}</span>
                           </div>
@@ -183,7 +183,7 @@ export const EmblaCarousel = () => {
 
                     <Link
                       href="/contato"
-                      className="w-fit inline-block px-6 py-3 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-base md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
+                      className="w-fit inline-block px-5 py-2.5 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-sm md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
                     >
                       Entre em Contato
                     </Link>
