@@ -5,7 +5,6 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoscroll from 'embla-carousel-auto-scroll';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 
 interface Client {
   id: number;
@@ -35,66 +34,127 @@ const clients: Client[] = [
 ];
 
 export default function ClientsCarousel() {
-  const [emblaRef] = useEmblaCarousel({ 
-    loop: true, 
+  const midpoint = Math.ceil(clients.length / 2);
+  const row1 = clients.slice(0, midpoint);
+  const row2 = clients.slice(midpoint);
+
+  const [emblaRef1] = useEmblaCarousel({
+    loop: true,
     align: 'start',
     skipSnaps: false,
     dragFree: true,
   }, [
-    Autoscroll({speed: 1, stopOnInteraction: false})
+    Autoscroll({ speed: 1, stopOnInteraction: false })
   ]);
 
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.5,
-  });
+  const [emblaRef2] = useEmblaCarousel({
+    loop: true,
+    align: 'start',
+    skipSnaps: false,
+    dragFree: true,
+  }, [
+    Autoscroll({ speed: -1, stopOnInteraction: false })
+  ]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { 
-        duration: 0.8,
-        ease: "easeInOut" 
-      } 
-    }
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        duration: 0.6,
+      }
+    },
   };
 
   return (
-    <section ref={ref} className="container py-12 px-4 sm:px-8 mt-6 md:mt-10">
+    <section className="container py-20 md:py-24 px-6 md:px-12">
       <div className="container mx-auto">
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-center mb-10"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mb-12"
         >
-          <h1 className="text-5xl font-bold text-white mb-8 text-center">Nossos <span className="text-greenSup">Clientes</span></h1>
-          <p className="text-gray-300 max-w-2xl mx-auto">
+          <motion.h2
+            variants={itemVariants}
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+          >
+            Nossos <span className="text-greenSup">Clientes</span>
+          </motion.h2>
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 80 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="h-1 bg-greenSup rounded-full mb-6"
+          />
+          <motion.p
+            variants={itemVariants}
+            className="text-gray-300 max-w-2xl text-lg leading-relaxed"
+          >
             Confira algumas das empresas e instituições que confiam em nosso trabalho para análises precisas e qualidade garantida.
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div className="overflow-hidden relative" ref={emblaRef}>
-          <div className="flex items-center">
-            {clients.map((client) => (
-              <div 
-                key={client.id} 
-                className="flex-[0_0_50%] md:flex-[0_0_20%] px-6"
-              >
-                  <Image
-                    src={client.logo}
-                    alt={client.alt}
-                    width={200}
-                    height={200}
-                    className="object-cover transition-all duration-300"
-                  />
-              </div>
-            ))}
+        <div className="flex flex-col gap-8 md:gap-12 relative">
+          {/* Row 1 - Left to Right (Standard) */}
+          <div className="overflow-hidden relative" ref={emblaRef1}>
+            <div className="flex items-center -ml-4">
+              {row1.map((client) => (
+                <div
+                  key={client.id}
+                  className="flex-[0_0_40%] md:flex-[0_0_20%] pl-4"
+                >
+                  <div className="relative w-full h-32 md:h-40 flex items-center justify-center">
+                    <Image
+                      src={client.logo}
+                      alt={client.alt}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="absolute left-0 top-0 h-full w-[100px] z-10 bg-gradient-to-r from-primary to-transparent"></div>
-<div className="absolute right-[-1px] top-0 h-full w-[100px] z-10 bg-gradient-to-l from-primary to-transparent"></div>
 
+          {/* Row 2 - Right to Left (Reverse) */}
+          <div className="overflow-hidden relative" ref={emblaRef2}>
+            <div className="flex items-center -ml-4">
+              {row2.map((client) => (
+                <div
+                  key={client.id}
+                  className="flex-[0_0_40%] md:flex-[0_0_20%] pl-4"
+                >
+                  <div className="relative w-full h-32 md:h-40 flex items-center justify-center">
+                    <Image
+                      src={client.logo}
+                      alt={client.alt}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="absolute left-0 top-0 h-full w-24 z-10 bg-gradient-to-r from-primary to-transparent pointer-events-none"></div>
+          <div className="absolute right-0 top-0 h-full w-24 z-10 bg-gradient-to-l from-primary to-transparent pointer-events-none"></div>
         </div>
       </div>
     </section>
