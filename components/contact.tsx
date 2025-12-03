@@ -1,8 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 import { Phone, Mail, Clock, ExternalLink, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
@@ -27,43 +26,59 @@ interface ContactCardData {
 }
 
 // Componente reutilizável para os cards
-const ContactCard = ({ data, variants }: { data: ContactCardData, variants: Variants }) => {
+const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) => {
   const { icon: Icon, title, items, action } = data;
 
   return (
     <motion.div
-      variants={variants}
-      className="border-2 border-primary/50 p-6 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 h-full"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        duration: 0.6,
+        delay: index * 0.1
+      }}
+      className="group relative overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_40px_-10px_rgba(34,197,94,0.2)] h-full"
     >
-      <div className="flex flex-col items-center text-center h-full">
-        <div className="bg-primary/50 p-4 rounded-full mb-4">
-          <Icon size={32} className="text-greenSup" />
+      <div className="absolute inset-0 bg-gradient-to-br from-greenSup/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <div className="relative z-10 flex flex-col items-center text-center h-full">
+        <div className="w-16 h-16 bg-greenSup/10 rounded-2xl flex items-center justify-center mb-6 text-greenSup group-hover:scale-110 transition-transform duration-500 border border-greenSup/20">
+          <Icon size={32} />
         </div>
-        <h3 className="text-xl font-semibold text-white mb-4">{title}</h3>
-        <div className="space-y-3 text-gray-200 flex-grow font-medium">
+
+        <h3 className="text-2xl font-bold text-white mb-6">{title}</h3>
+
+        <div className="space-y-4 text-gray-300 flex-grow font-medium w-full">
           {items.map((item, index) => (
             item.href ? (
               <Link
                 key={index}
                 href={item.href}
                 target="_blank"
-                className="flex items-center justify-center gap-2 hover:text-greenSup transition-colors"
+                className="flex items-center justify-center gap-2 hover:text-greenSup transition-colors p-2 rounded-lg hover:bg-white/5 w-full"
               >
-                {item.prefix && <span className="font-medium">{item.prefix}:</span>} {item.text}
+                {item.prefix && <span className="font-medium text-gray-400">{item.prefix}:</span>} {item.text}
               </Link>
             ) : (
-              <p key={index} className="flex items-center justify-center gap-2">
-                {item.prefix && <span className="font-medium">{item.prefix}:</span>} {item.text}
-              </p>
+              <div key={index} className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg bg-white/5 w-full border border-white/5">
+                {item.prefix && <span className="text-sm text-greenSup font-bold uppercase tracking-wider">{item.prefix}</span>}
+                <span className="text-white">{item.text}</span>
+              </div>
             )
           ))}
         </div>
+
         <Link
           href={action.href}
           target={action.openInNewTab ? "_blank" : undefined}
-          className="mt-6 inline-flex items-center text-greenSup-light/90 hover:text-green-600 transition-colors duration-300"
+          className="mt-8 w-full py-4 px-6 bg-white/5 hover:bg-greenSup text-greenSup hover:text-white rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 group/btn border border-white/10 hover:border-greenSup"
         >
-          {action.text} <action.icon size={16} className="ml-1" />
+          {action.text}
+          <action.icon size={18} className="group-hover/btn:translate-x-1 transition-transform" />
         </Link>
       </div>
     </motion.div>
@@ -71,21 +86,6 @@ const ContactCard = ({ data, variants }: { data: ContactCardData, variants: Vari
 };
 
 export default function ContactSection() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
 
   const titleVariants = {
     hidden: {
@@ -95,25 +95,6 @@ export default function ContactSection() {
     },
     visible: {
       y: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        type: "spring",
-        stiffness: 70,
-        damping: 20,
-        duration: 0.7
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: {
-      y: 0,
-      opacity: 0,
-      filter: "blur(4px)"
-    },
-    visible: {
-      y: 30,
       opacity: 1,
       filter: "blur(0px)",
       transition: {
@@ -174,45 +155,43 @@ export default function ContactSection() {
   ];
 
   return (
-    <section ref={ref} className="container py-12 px-4 sm:px-8 mt-6 md:mt-10 bg-primary-dark rounded-lg">
+    <section className="container py-20 md:py-24 px-6 md:px-12 relative">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-greenSup/10 rounded-full blur-3xl -z-10 mix-blend-screen" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10 mix-blend-screen" />
+
       <div className="container mx-auto">
         <motion.div
-          key={`first-div-${2}`}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
         >
-          <motion.h1 variants={titleVariants} className="text-5xl font-bold text-white mb-8 text-center">Entre em <span className="text-greenSup">Contato</span></motion.h1>
-          <motion.p variants={titleVariants} className="text-gray-300 max-w-2xl mx-auto">
+          <motion.h2 variants={titleVariants} className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Entre em <span className="text-greenSup">Contato</span>
+          </motion.h2>
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 80 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="h-1 bg-greenSup rounded-full mb-6"
+          />
+          <motion.p variants={titleVariants} className="text-gray-300 max-w-2xl text-lg leading-relaxed">
             Fale com nossos especialistas e garanta a qualidade das suas análises hoje mesmo.
           </motion.p>
         </motion.div>
 
-        <motion.div
-          key={`first-div-${1}`}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-4"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {contactCards.map((card, index: number) => (
             <ContactCard
               key={card.id}
               data={card}
-              variants={{
-                ...cardVariants,
-                visible: {
-                  ...cardVariants.visible,
-                  transition: {
-                    ...cardVariants.visible.transition,
-                  }
-                }
-              }}
+              index={index}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
-    </section >
+    </section>
   );
 }

@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
   };
 
   return (
-    <section className="container py-20 px-4 sm:px-8 mt-6 md:mt-10 select-none">
+    <section className="container py-20 md:py-24 px-6 md:px-12 select-none">
       {/* Título - Estilo unificado com Nossa Estrutura */}
       <motion.div
         variants={containerVariants}
@@ -63,8 +63,10 @@ export default function WhyChooseUs() {
           Por que escolher a <span className="text-greenSup">Suprema Analítica</span>?
         </motion.h2>
         <motion.div
-          variants={itemVariants}
-          className="w-20 h-1 bg-greenSup rounded-full mb-6"
+          initial={{ width: 0 }}
+          whileInView={{ width: 80 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="h-1 bg-greenSup rounded-full mb-6"
         />
         <motion.p
           variants={itemVariants}
@@ -102,7 +104,7 @@ export default function WhyChooseUs() {
               <div className="flex items-center gap-2 text-greenSup mb-1">
                 <Star size={20} />
                 <span className="font-bold text-2xl">
-                  <CountUp end={20} duration={2.5} prefix="+" />
+                  <CountUp end={20} duration={2.5} prefix="+" enableScrollSpy scrollSpyOnce />
                 </span>
               </div>
               <p className="text-sm text-gray-300 font-medium">Anos de Mercado</p>
@@ -111,7 +113,7 @@ export default function WhyChooseUs() {
               <div className="flex items-center gap-2 text-greenSup mb-1">
                 <UserCheck size={20} />
                 <span className="font-bold text-2xl">
-                  <CountUp end={1000} duration={2.5} prefix="+" />
+                  <CountUp end={1000} duration={2.5} prefix="+" enableScrollSpy scrollSpyOnce />
                 </span>
               </div>
               <p className="text-sm text-gray-300 font-medium">Clientes Atendidos</p>
@@ -120,7 +122,7 @@ export default function WhyChooseUs() {
               <div className="flex items-center gap-2 text-greenSup mb-1">
                 <Microscope size={20} />
                 <span className="font-bold text-2xl">
-                  <CountUp end={10000} duration={2.5} prefix="+" />
+                  <CountUp end={10000} duration={2.5} prefix="+" enableScrollSpy scrollSpyOnce />
                 </span>
               </div>
               <p className="text-sm text-gray-300 font-medium">Análises Realizadas</p>
