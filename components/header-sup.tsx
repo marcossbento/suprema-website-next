@@ -173,11 +173,12 @@ export const Header = () => {
             </Link>
             <Link href={"https://portal.mylimsweb.cloud/Login"} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className={cn(
-                "rounded-full font-bold transition-all duration-300",
+                "rounded-full font-bold transition-all duration-300 relative overflow-hidden group",
                 isScrolled ? "h-9 px-4 text-sm" : "h-11 px-6 text-base",
                 "border-primary text-primary hover:bg-primary hover:text-white hover:scale-105"
               )}>
-                Área do Cliente
+                <span className="relative z-10">Área do Cliente</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
               </Button>
             </Link>
           </div>
@@ -271,8 +272,9 @@ export const Header = () => {
                     </Button>
                   </Link>
                   <Link href="https://portal.mylimsweb.cloud/Login" target="_blank">
-                    <Button variant="outline" className="w-full py-6 rounded-full border-2 border-primary text-primary font-bold text-lg hover:bg-primary hover:text-white transition-all">
-                      Área do Cliente
+                    <Button variant="outline" className="w-full py-6 rounded-full border-2 border-primary text-primary font-bold text-lg hover:bg-primary hover:text-white transition-all relative overflow-hidden group">
+                      <span className="relative z-10">Área do Cliente</span>
+                      <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
                     </Button>
                   </Link>
                 </div>

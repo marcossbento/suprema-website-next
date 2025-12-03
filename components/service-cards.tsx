@@ -92,12 +92,17 @@ const ServiceCard = ({ service }: { service: Service }) => {
 
 export default function ServiceCards() {
     return (
-        <section id="servicos" className="container py-12 px-4 sm:px-8 mt-6 md:mt-10">
+        <section id="servicos" className="container py-20 md:py-24 px-6 md:px-12">
             <div className="mb-12">
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                     Nossos <span className="text-greenSup">Serviços</span>
                 </h2>
-                <div className="w-20 h-1 bg-greenSup rounded-full mb-6" />
+                <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: 80 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="h-1 bg-greenSup rounded-full mb-6"
+                />
                 <p className="text-gray-300 max-w-2xl text-lg leading-relaxed">
                     Soluções analíticas completas: da rotina à alta complexidade.
                 </p>
