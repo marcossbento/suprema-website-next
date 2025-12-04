@@ -155,7 +155,7 @@ export default function ContactSection() {
   ];
 
   return (
-    <section className="container py-20 md:py-24 px-6 md:px-12 relative">
+    <section id="contato" className="container py-20 md:py-24 px-6 md:px-12 relative">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-greenSup/10 rounded-full blur-3xl -z-10 mix-blend-screen" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10 mix-blend-screen" />

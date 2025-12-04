@@ -59,6 +59,8 @@ export const Header = () => {
     }
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <a
@@ -100,7 +102,7 @@ export const Header = () => {
           </Link>
 
           {/* Navegação para Desktop */}
-          <NavigationMenu className="hidden md:flex text-primary">
+          <NavigationMenu className="hidden lg:flex text-primary">
             <NavigationMenuList className="font-bold text-base gap-2">
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="font-bold text-base bg-transparent hover:bg-primary/5 data-[state=open]:bg-primary/5 transition-colors">Sobre nós</NavigationMenuTrigger>
@@ -160,8 +162,8 @@ export const Header = () => {
           </NavigationMenu>
 
           {/* Botões de Ação */}
-          <div className="hidden md:flex items-center gap-4">
-            <Link href="#contato">
+          <div className="hidden lg:flex items-center gap-4">
+            <Link href="/#contato">
               <Button className={cn(
                 "rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
                 isScrolled ? "h-9 px-4 text-sm" : "h-11 px-6 text-base",
@@ -184,8 +186,8 @@ export const Header = () => {
           </div>
 
           {/* Menu Mobile - Sheet/Sidebar */}
-          <div className="flex items-center md:hidden">
-            <Sheet>
+          <div className="flex items-center lg:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-primary hover:bg-primary/5">
                   <Menu size={32} />
@@ -220,6 +222,7 @@ export const Header = () => {
                           <Link
                             key={item.title}
                             href={item.href}
+                            onClick={() => setIsOpen(false)}
                             className="flex items-center justify-between py-3 text-base font-medium text-foreground hover:text-greenSup transition-colors group"
                           >
                             {item.title}
@@ -241,6 +244,7 @@ export const Header = () => {
                           <Link
                             key={service.title}
                             href={service.href}
+                            onClick={() => setIsOpen(false)}
                             className="flex items-center justify-between py-3 text-base font-medium text-foreground hover:text-greenSup transition-colors group"
                           >
                             {service.title}
@@ -256,6 +260,7 @@ export const Header = () => {
                 <div className="mt-2 border-t border-border/40 pt-2">
                   <Link
                     href="/contato"
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between py-4 text-lg font-semibold text-primary hover:text-greenSup transition-colors group"
                   >
                     Contato
@@ -265,7 +270,7 @@ export const Header = () => {
 
                 {/* Botões de Ação */}
                 <div className="mt-8 flex flex-col gap-4">
-                  <Link href="#contato">
+                  <Link href="/#contato" onClick={() => setIsOpen(false)}>
                     <Button className="w-full py-6 rounded-full bg-greenSup text-white font-bold text-lg hover:bg-greenSup-dark shadow-md hover:shadow-lg transition-all relative overflow-hidden group">
                       <span className="relative z-10">Solicitar Orçamento</span>
                       <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
