@@ -111,7 +111,7 @@ export const NossaEstrutura = () => {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl transition-colors group cursor-pointer"
                             >
-                                <div className="relative w-24 h-24 shrink-0 bg-white rounded-lg p-2 flex items-center justify-center">
+                                <div className="relative w-24 h-24 shrink-0 flex items-center justify-center">
                                     <Image
                                         src="/creditacao.webp"
                                         alt="ISO/IEC 17025"
@@ -133,7 +133,7 @@ export const NossaEstrutura = () => {
                                 whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
                                 className="flex items-center gap-4 bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl transition-colors group"
                             >
-                                <div className="relative w-24 h-24 shrink-0 bg-white rounded-lg p-2 flex items-center justify-center">
+                                <div className="relative w-24 h-24 shrink-0 flex items-center justify-center">
                                     <Image
                                         src="/logoReblas.webp"
                                         alt="REBLAS ANVISA"

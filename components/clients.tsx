@@ -153,8 +153,8 @@ export default function ClientsCarousel() {
             </div>
           </div>
 
-          <div className="absolute left-0 top-0 h-full w-24 z-10 bg-gradient-to-r from-primary to-transparent pointer-events-none"></div>
-          <div className="absolute right-0 top-0 h-full w-24 z-10 bg-gradient-to-l from-primary to-transparent pointer-events-none"></div>
+          <div className="absolute left-0 top-0 h-full w-12 md:w-40 z-20 bg-gradient-to-r from-primary via-primary/80 to-transparent pointer-events-none"></div>
+          <div className="absolute right-0 top-0 h-full w-12 md:w-40 z-20 bg-gradient-to-l from-primary via-primary/80 to-transparent pointer-events-none"></div>
         </div>
       </div>
     </section>

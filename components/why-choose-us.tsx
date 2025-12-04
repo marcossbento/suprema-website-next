@@ -77,7 +77,7 @@ export default function WhyChooseUs() {
       </motion.div>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
 
         {/* Card 1: Experiência (2 colunas) */}
         <motion.div
@@ -85,7 +85,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col justify-between p-8"
+          className="md:col-span-2 lg:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col justify-between p-8"
         >
 
 
@@ -136,7 +136,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
+          className="md:col-span-1 lg:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-greenSup/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -170,7 +170,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
+          className="md:col-span-1 lg:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] p-8 flex flex-col"
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10" />
 
@@ -203,7 +203,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col md:flex-row items-center"
+          className="md:col-span-2 lg:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-primary-dark shadow-2xl min-h-[400px] flex flex-col md:flex-row items-center"
         >
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
@@ -237,10 +237,11 @@ export default function WhyChooseUs() {
             <div className="relative w-full h-full max-w-xs opacity-80">
               <Map size={200} className="text-white/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-150" />
               {/* Pontos pulsantes representando cobertura */}
-              <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-greenSup rounded-full animate-ping" />
-              <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-              <div className="absolute bottom-1/3 right-1/3 w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-75" />
-              <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse delay-150" />
+              <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-greenSup rounded-full animate-ping-slow" />
+              <div className="absolute top-[25%] left-[25%] w-2 h-2 bg-purple-400 rounded-full animate-ping-slow" style={{ animationDelay: '0.2s' }} />
+              <div className="absolute bottom-[25%] right-[25%] w-2 h-2 bg-blue-400 rounded-full animate-ping-slow" style={{ animationDelay: '0.5s' }} />
+              <div className="absolute top-[28%] right-[28%] w-2 h-2 bg-white rounded-full animate-ping-slow" style={{ animationDelay: '0.8s' }} />
+              <div className="absolute bottom-[30%] left-[25%] w-2 h-2 bg-greenSup/80 rounded-full animate-ping-slow" style={{ animationDelay: '1.1s' }} />
             </div>
           </div>
         </motion.div>
