@@ -80,29 +80,29 @@ export const EmblaCarousel = () => {
   }, [emblaApi]);
 
   return (
-    <div className="embla w-full h-[80vh] bg-black md:h-screen overflow-hidden" ref={emblaRef}>
-      <div className="embla__container h-[80vh] flex flex-row md:h-screen">
+    <div className="embla w-full h-[80vh] bg-black lg:h-screen overflow-hidden" ref={emblaRef}>
+      <div className="embla__container h-full flex flex-row lg:h-screen">
         {slides.map((slide, index) => (
           <div key={slide.id} className="embla__slide flex flex-[0_0_100%] object-none relative">
             <Image
               src={slide.image}
               alt={slide.alt}
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 1024px) 100vw, 50vw"
               priority={index === 0}
               unoptimized
               className='object-cover'
             />
             {/* Gradient Overlay: Bottom-to-top (Mobile) / Left-to-right (Desktop) */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b45] via-[#0e1b45]/50 to-transparent md:bg-gradient-to-r md:from-[#0e1b45] md:via-[#0e1b45]/80 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b45] via-[#0e1b45]/50 to-transparent lg:bg-gradient-to-r lg:from-[#0e1b45] lg:via-[#0e1b45]/80 lg:to-transparent" />
 
             {/* Content Grid */}
-            <div className="absolute inset-0 px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center">
+            <div className="absolute inset-0 px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 items-center">
 
               {/* Left Column: Text & CTA */}
-              <div className="flex flex-col justify-center items-start h-full text-left select-none text-white font-bold">
+              <div className="flex flex-col justify-center items-start h-full text-left select-none text-white font-bold pt-20 lg:pt-0">
                 <motion.h1
-                  className={`text-3xl md:text-6xl lg:text-7xl mb-3 md:mb-6 max-w-3xl leading-tight`} // Increased mobile size
+                  className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 md:mb-6 max-w-3xl leading-tight`} // Increased mobile size
                   initial={{ opacity: 0, x: -100 }}
                   animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
@@ -119,20 +119,20 @@ export const EmblaCarousel = () => {
                     className="flex flex-col items-start"
                   >
                     {/* Imagem Mobile (Escondida no Desktop) - Reduzida e Ajustada */}
-                    <div className="md:hidden mb-4">
+                    <div className="lg:hidden mb-4">
                       <a href="http://www.inmetro.gov.br/laboratorios/rble/docs/CRL1546.pdf" target="_blank" rel="noopener noreferrer">
                         <Image
                           src={slide.acreditacaoImg}
                           alt={slide.acreditacaoAlt || 'Credenciamento'}
                           width={100}
                           height={166}
-                          className="object-contain w-24 drop-shadow-lg"
+                          className="object-contain w-28 sm:w-32 drop-shadow-lg"
                         />
                       </a>
                     </div>
 
                     <Link
-                      href="/contato"
+                      href="/#contato"
                       className="w-fit inline-block px-5 py-2.5 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-sm md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
                     >
                       Entre em Contato
@@ -146,13 +146,13 @@ export const EmblaCarousel = () => {
                     animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
                     transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                   >
-                    <h2 className={`text-base md:text-2xl text-gray-200 max-w-2xl mb-5 md:mb-8 font-medium`}>
+                    <h2 className={`text-base sm:text-xl md:text-2xl text-gray-200 max-w-2xl mb-6 md:mb-8 font-medium`}>
                       {slide.subtitle}
                     </h2>
 
                     {/* Features Mobile (Slide 1) */}
                     {slide.features && (
-                      <div className="flex flex-wrap justify-start gap-2 mb-6 md:hidden">
+                      <div className="flex flex-wrap justify-start gap-2 mb-6 lg:hidden">
                         {slide.features.map((feature, i) => (
                           <div key={i} className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 px-2.5 py-1.5 rounded-full">
                             <div className="text-greenSup">
@@ -166,7 +166,7 @@ export const EmblaCarousel = () => {
 
                     {/* Tags Mobile (Slide 3) */}
                     {slide.tags && (
-                      <div className="flex flex-wrap justify-start gap-2 mb-6 md:hidden">
+                      <div className="flex flex-wrap justify-start gap-2 mb-6 lg:hidden">
                         {slide.tags.map((tag, i) => (
                           <div
                             key={i}
@@ -182,7 +182,7 @@ export const EmblaCarousel = () => {
                     )}
 
                     <Link
-                      href="/contato"
+                      href="/#contato"
                       className="w-fit inline-block px-5 py-2.5 md:px-8 md:py-4 bg-greenSup text-white rounded-full text-sm md:text-lg font-bold shadow-lg hover:bg-greenSup-dark transition-all duration-300 transform hover:scale-105"
                     >
                       Entre em Contato
@@ -192,7 +192,7 @@ export const EmblaCarousel = () => {
               </div>
 
               {/* Right Column: Visuals (Desktop Only) */}
-              <div className="hidden md:flex justify-center items-center h-full">
+              <div className="hidden lg:flex justify-center items-center h-full">
                 {/* Acreditação */}
                 {slide.acreditacaoImg && (
                   <motion.div
