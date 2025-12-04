@@ -23,12 +23,12 @@ export default function Footer() {
     ];
 
     const services = [
-        { title: "Análise de Água", href: "/analise-de-agua" },
-        { title: "Análise de Alimentos", href: "/analise-de-alimentos" },
-        { title: "Análise de Solo", href: "/analise-de-solo" },
-        { title: "Efluentes", href: "/efluentes" },
-        { title: "Limpeza de Reservatórios", href: "/limpeza-e-higienização" },
-        { title: "Cosméticos", href: "/cosmeticos" },
+        { title: "Análise de Água", href: "/servicos/analise-de-agua" },
+        { title: "Análise de Alimentos", href: "/servicos/analise-de-alimentos" },
+        { title: "Análise de Solo", href: "/servicos/analise-de-solo" },
+        { title: "Efluentes", href: "/servicos/efluentes" },
+        { title: "Limpeza de Reservatórios", href: "/servicos/limpeza-e-higienização" },
+        { title: "Cosméticos", href: "/servicos/cosmeticos" },
     ];
 
     return (
