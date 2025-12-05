@@ -73,7 +73,7 @@ export const services = [
         id: 3,
         icon: "Sprout",
         title: "Análise de Solo",
-        img: "/services/analise-solo.webp",
+        img: "/analise-solo.png",
         slug: "/servicos/analise-de-solo",
     },
     {

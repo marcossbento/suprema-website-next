@@ -152,7 +152,7 @@ export const Header = () => {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="#contato" legacyBehavior passHref>
+                <Link href="/#contato" legacyBehavior passHref>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-primary/5 font-bold text-base transition-colors")}>
                     Contato
                   </NavigationMenuLink>
@@ -189,8 +189,8 @@ export const Header = () => {
           <div className="flex items-center lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-primary hover:bg-primary/5">
-                  <Menu size={32} />
+                <Button variant="ghost" className="text-primary hover:bg-primary/5 h-12 w-12 p-0 flex items-center justify-center">
+                  <Menu className="!w-[32px] !h-[32px]" />
                   <span className="sr-only">Abrir menu</span>
                 </Button>
               </SheetTrigger>
@@ -259,7 +259,7 @@ export const Header = () => {
                 {/* Links diretos */}
                 <div className="mt-2 border-t border-border/40 pt-2">
                   <Link
-                    href="/contato"
+                    href="/#contato"
                     onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between py-4 text-lg font-semibold text-primary hover:text-greenSup transition-colors group"
                   >
