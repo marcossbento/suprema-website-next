@@ -27,7 +27,7 @@ export default function Footer() {
         { title: "Análise de Alimentos", href: "/servicos/analise-de-alimentos" },
         { title: "Análise de Solo", href: "/servicos/analise-de-solo" },
         { title: "Efluentes", href: "/servicos/efluentes" },
-        { title: "Limpeza de Reservatórios", href: "/servicos/limpeza-e-higienização" },
+        { title: "Limpeza de Reservatórios", href: "/servicos/limpeza-de-reservatorios" },
         { title: "Cosméticos", href: "/servicos/cosmeticos" },
     ];
 

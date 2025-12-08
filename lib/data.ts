@@ -34,7 +34,7 @@ export const navServicesItems: { title: string; href: string; description: strin
   },
   {
     title: "Higienização de Reservatórios",
-    href: "/servicos/limpeza-e-higienizacao",
+    href: "/servicos/limpeza-de-reservatorios",
     description: "Serviços de limpeza e desinfecção para garantir a qualidade da água armazenada.",
   },
   {
@@ -88,7 +88,7 @@ export const services = [
         icon: "Sparkles",
         title: "Higienização de Reservatórios",
         img: "/services/limpeza-higienizacao.webp",
-        slug: "/servicos/limpeza-e-higienizacao",
+        slug: "/servicos/limpeza-de-reservatorios",
     },
     {
         id: 6,
