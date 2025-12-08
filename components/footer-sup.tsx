@@ -29,6 +29,7 @@ export default function Footer() {
         { title: "Efluentes", href: "/servicos/efluentes" },
         { title: "Limpeza de Reservatórios", href: "/servicos/limpeza-de-reservatorios" },
         { title: "Cosméticos", href: "/servicos/cosmeticos" },
+        { title: "Coleta de Amostras", href: "/servicos/amostragem" },
     ];
 
     return (
