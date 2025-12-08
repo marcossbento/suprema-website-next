@@ -26,7 +26,7 @@ export default function LimpezaReservatoriosPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
+            <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 md:pt-32">
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="/hero-limpeza.png"
@@ -184,7 +184,7 @@ export default function LimpezaReservatoriosPage() {
                                  or just the same one for now as per instructions to keep structure.
                              */}
                             <div className="relative bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm h-full flex flex-col justify-center">
-                                <div className="w-20 h-20 bg-greenSup/20 rounded-full flex items-center justify-center text-greenSup mb-8 mx-auto">
+                                <div className="w-20 h-20 bg-greenSup/20 rounded-full flex items-center justify-center text-greenSup mb-8 mx-auto shrink-0">
                                     <CheckCircle2 size={40} />
                                 </div>
                                 <h3 className="text-3xl font-bold text-white mb-6 text-center">Qualidade Garantida</h3>
@@ -208,24 +208,39 @@ export default function LimpezaReservatoriosPage() {
                         viewport={{ once: true, amount: 0.3 }}
                         className="bg-gradient-to-br from-white/10 to-white/5 p-1 rounded-3xl"
                     >
-                        <div className="bg-primary-dark rounded-[22px] p-12 md:p-20 text-center">
-                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 max-w-4xl mx-auto">
-                                A qualidade da água que você consome ou transporta depende da limpeza do local onde ela é armazenada.
-                            </h2>
-                            <div className="flex justify-center">
-                                <Link href="/#contato">
-                                    <Button className={cn(
-                                        "rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
-                                        "h-auto min-h-[3.5rem] py-3 px-6 text-base md:h-16 md:px-10 md:text-xl whitespace-normal",
-                                        "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
-                                    )}>
-                                        <span className="relative z-10 flex items-center gap-3">
-                                            Solicitar Orçamento de Higienização
-                                            <ArrowRight size={24} />
-                                        </span>
-                                        <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
-                                    </Button>
-                                </Link>
+                        <div className="bg-primary-dark rounded-[22px] p-12 md:p-20 text-left relative overflow-hidden">
+                            {/* Background decoration */}
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-greenSup/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+
+                            <div className="relative z-10">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-greenSup/10 border border-greenSup/20 mb-6">
+                                    <ShieldCheck size={16} className="text-greenSup" />
+                                    <span className="text-xs font-bold text-greenSup uppercase tracking-wider">Segurança Garantida</span>
+                                </div>
+
+                                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 max-w-4xl leading-tight">
+                                    A <span className="text-greenSup">qualidade da água</span> que você consome depende da limpeza do seu reservatório.
+                                </h2>
+
+                                <p className="text-gray-400 text-lg mb-8 max-w-2xl">
+                                    Não corra riscos. Garanta a potabilidade da água e a saúde de todos com nossa higienização especializada e certificada.
+                                </p>
+
+                                <div className="flex justify-start">
+                                    <Link href="/#contato">
+                                        <Button className={cn(
+                                            "rounded-2xl font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
+                                            "h-auto min-h-[3.5rem] py-3 px-8 text-base md:h-16 md:px-10 md:text-xl whitespace-normal",
+                                            "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
+                                        )}>
+                                            <span className="relative z-10 flex items-center gap-3">
+                                                Solicitar Orçamento
+                                                <ArrowRight size={24} />
+                                            </span>
+                                            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
+                                        </Button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </motion.div>

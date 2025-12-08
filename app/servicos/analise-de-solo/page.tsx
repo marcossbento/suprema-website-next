@@ -117,7 +117,7 @@ export default function AnaliseDeSoloPage() {
                                     />
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-greenSup/20 flex items-center justify-center text-greenSup">
+                                    <div className="w-12 h-12 rounded-full bg-greenSup/20 flex items-center justify-center text-greenSup shrink-0">
                                         <CheckCircle2 size={24} />
                                     </div>
                                     <div>
@@ -309,7 +309,7 @@ export default function AnaliseDeSoloPage() {
                                 </p>
                                 <Link href="/#contato">
                                     <Button className={cn(
-                                        "rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
+                                        "rounded-2xl font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
                                         "h-14 px-8 text-lg",
                                         "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
                                     )}>

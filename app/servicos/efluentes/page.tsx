@@ -27,7 +27,7 @@ export default function AnaliseDeEfluentesPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
+            <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 md:pt-32">
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="/effluent-hero.png"
@@ -115,7 +115,7 @@ export default function AnaliseDeEfluentesPage() {
                                     className="rounded-2xl object-cover w-full h-64 md:h-80 mb-6"
                                 />
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-greenSup/20 flex items-center justify-center text-greenSup">
+                                    <div className="w-12 h-12 rounded-full bg-greenSup/20 flex items-center justify-center text-greenSup shrink-0">
                                         <CheckCircle2 size={24} />
                                     </div>
                                     <div>
@@ -275,7 +275,7 @@ export default function AnaliseDeEfluentesPage() {
                                 </p>
                                 <Link href="/#contato">
                                     <Button className={cn(
-                                        "rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
+                                        "rounded-2xl font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
                                         "h-14 px-8 text-lg",
                                         "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
                                     )}>

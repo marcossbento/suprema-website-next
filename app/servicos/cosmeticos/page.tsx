@@ -25,7 +25,7 @@ export default function CosmeticosPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
+            <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 md:pt-32">
                 <div className="absolute inset-0 z-0">
                     <Image
                         src="/hero-cosmeticos.webp"
@@ -86,7 +86,7 @@ export default function CosmeticosPage() {
                             <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/20 to-purple-500/20 rounded-3xl blur-2xl" />
                             <div className="relative bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400">
+                                    <div className="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 shrink-0">
                                         <CheckCircle2 size={24} />
                                     </div>
                                     <div>
@@ -202,24 +202,39 @@ export default function CosmeticosPage() {
                         viewport={{ once: true, amount: 0.3 }}
                         className="bg-gradient-to-br from-white/10 to-white/5 p-1 rounded-3xl"
                     >
-                        <div className="bg-primary-dark rounded-[22px] p-12 md:p-20 text-left">
-                            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 max-w-4xl">
-                                Proteja sua marca e garanta a excelência dos seus cosméticos.
-                            </h2>
-                            <div className="flex justify-start">
-                                <Link href="/#contato">
-                                    <Button className={cn(
-                                        "rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
-                                        "h-auto min-h-[3.5rem] py-3 px-6 text-base md:h-16 md:px-10 md:text-xl whitespace-normal",
-                                        "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
-                                    )}>
-                                        <span className="relative z-10 flex items-center gap-3">
-                                            Solicitar Orçamento
-                                            <ArrowRight size={24} />
-                                        </span>
-                                        <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
-                                    </Button>
-                                </Link>
+                        <div className="bg-primary-dark rounded-[22px] p-12 md:p-20 text-left relative overflow-hidden">
+                            {/* Background decoration */}
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+
+                            <div className="relative z-10">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 mb-6">
+                                    <Sparkles size={16} className="text-pink-400" />
+                                    <span className="text-xs font-bold text-pink-400 uppercase tracking-wider">Controle de Qualidade</span>
+                                </div>
+
+                                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 max-w-4xl leading-tight">
+                                    Proteja sua marca e garanta a <span className="text-greenSup">excelência</span> dos seus cosméticos.
+                                </h2>
+
+                                <p className="text-gray-400 text-lg mb-8 max-w-2xl">
+                                    Análises rigorosas para assegurar a conformidade com a ANVISA e a confiança do seu consumidor.
+                                </p>
+
+                                <div className="flex justify-start">
+                                    <Link href="/#contato">
+                                        <Button className={cn(
+                                            "rounded-2xl font-bold transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group",
+                                            "h-auto min-h-[3.5rem] py-3 px-8 text-base md:h-16 md:px-10 md:text-xl whitespace-normal",
+                                            "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
+                                        )}>
+                                            <span className="relative z-10 flex items-center gap-3">
+                                                Solicitar Orçamento
+                                                <ArrowRight size={24} />
+                                            </span>
+                                            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
+                                        </Button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
