@@ -213,7 +213,7 @@ export default function OutrosServicosPage() {
                                         "bg-greenSup text-white hover:bg-greenSup-dark hover:scale-105"
                                     )}>
                                         <span className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-2 text-center whitespace-normal">
-                                            Consultar Especialista sobre Projeto Personalizado
+                                            Consulte um Especialista
                                         </span>
                                         <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0" />
                                     </Button>
