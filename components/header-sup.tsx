@@ -17,27 +17,51 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { navAboutItems, navServicesItems } from "@/lib/data"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { Menu, ChevronRight } from "lucide-react"
+import { Menu, ChevronRight, Droplet, Apple, Sprout, Waves, Sparkles, Brush, TestTubes, Microscope, History, Scale, BookOpen } from "lucide-react"
+
+const IconMap: Record<string, React.ElementType> = {
+  "Droplet": Droplet,
+  "Apple": Apple,
+  "Sprout": Sprout,
+  "Waves": Waves,
+  "Sparkles": Sparkles,
+  "Brush": Brush,
+  "TestTubes": TestTubes,
+  "Microscope": Microscope,
+  "History": History,
+  "Scale": Scale,
+  "BookOpen": BookOpen
+};
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { iconName?: string }
+>(({ className, title, children, iconName, ...props }, ref) => {
+  const Icon = iconName ? IconMap[iconName] : null;
   return (
     <li>
       <NavigationMenuLink asChild>
         <a
           ref={ref}
           className={cn(
-            "text-base block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
           {...props}
         >
-          <div className="text-base font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
+          <div className="flex items-start gap-4">
+            {Icon && (
+              <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                <Icon className="w-5 h-5 text-primary" />
+              </div>
+            )}
+            <div>
+              <div className="text-base font-medium leading-none mb-1 group-hover:text-primary transition-colors">{title}</div>
+              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                {children}
+              </p>
+            </div>
+          </div>
         </a>
       </NavigationMenuLink>
     </li>
@@ -113,10 +137,12 @@ export const Header = () => {
                       <NavigationMenuLink asChild>
                         <Link
                           href="/"
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-br from-primary/5 to-greenSup/10 border border-primary/10 p-6 no-underline outline-none focus:shadow-md transition-all hover:shadow-sm"
                         >
-                          <Image src={"/SupremaIcon.png"} alt="" width={60} height={60}></Image>
-                          <div className="mb-2 mt-4 text-lg font-medium">
+                          <div className="bg-white/50 w-fit p-2 rounded-xl mb-4 shadow-sm backdrop-blur-sm">
+                            <Image src={"/SupremaIcon.png"} alt="" width={48} height={48} className="w-12 h-12"></Image>
+                          </div>
+                          <div className="mb-2 text-lg font-bold text-primary">
                             Suprema Analítica
                           </div>
                           <p className="text-sm leading-tight text-muted-foreground">
@@ -126,7 +152,8 @@ export const Header = () => {
                       </NavigationMenuLink>
                     </li>
                     {navAboutItems.map((item) => (
-                      <ListItem key={item.title} href={item.href} title={item.title}>
+                      // @ts-ignore
+                      <ListItem key={item.title} href={item.href} title={item.title} iconName={item.icon}>
                         {item.description}
                       </ListItem>
                     ))}
@@ -137,12 +164,13 @@ export const Header = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="font-bold text-base bg-transparent hover:bg-primary/5 data-[state=open]:bg-primary/5 transition-colors">Serviços</NavigationMenuTrigger>
                 <NavigationMenuContent className="text-primary">
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-2 lg:w-[750px] ">
                     {navServicesItems.map((service) => (
                       <ListItem
                         key={service.title}
                         title={service.title}
                         href={service.href}
+                        iconName={service.icon}
                       >
                         {service.description}
                       </ListItem>
@@ -218,17 +246,28 @@ export const Header = () => {
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2 pl-4 border-l-2 border-primary/10 ml-1">
-                        {navAboutItems.map((item) => (
-                          <Link
-                            key={item.title}
-                            href={item.href}
-                            onClick={() => setIsOpen(false)}
-                            className="flex items-center justify-between py-3 text-base font-medium text-foreground hover:text-greenSup transition-colors group"
-                          >
-                            {item.title}
-                            <ChevronRight size={16} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
-                          </Link>
-                        ))}
+                        {navAboutItems.map((item) => {
+                          // @ts-ignore
+                          const Icon = item.icon ? IconMap[item.icon] : null;
+                          return (
+                            <Link
+                              key={item.title}
+                              href={item.href}
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center justify-between py-3 px-3 rounded-xl text-base font-medium text-foreground hover:bg-primary/5 hover:text-greenSup transition-colors group"
+                            >
+                              <div className="flex items-center gap-3">
+                                {Icon && (
+                                  <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-greenSup/10 group-hover:text-greenSup transition-colors">
+                                    <Icon size={18} />
+                                  </div>
+                                )}
+                                {item.title}
+                              </div>
+                              <ChevronRight size={16} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
+                            </Link>
+                          );
+                        })}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -240,17 +279,27 @@ export const Header = () => {
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2 pl-4 border-l-2 border-primary/10 ml-1">
-                        {navServicesItems.map((service) => (
-                          <Link
-                            key={service.title}
-                            href={service.href}
-                            onClick={() => setIsOpen(false)}
-                            className="flex items-center justify-between py-3 text-base font-medium text-foreground hover:text-greenSup transition-colors group"
-                          >
-                            {service.title}
-                            <ChevronRight size={16} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
-                          </Link>
-                        ))}
+                        {navServicesItems.map((service) => {
+                          const Icon = service.icon ? IconMap[service.icon] : null;
+                          return (
+                            <Link
+                              key={service.title}
+                              href={service.href}
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center justify-between py-3 px-3 rounded-xl text-base font-medium text-foreground hover:bg-primary/5 hover:text-greenSup transition-colors group"
+                            >
+                              <div className="flex items-center gap-3">
+                                {Icon && (
+                                  <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-greenSup/10 group-hover:text-greenSup transition-colors">
+                                    <Icon size={18} />
+                                  </div>
+                                )}
+                                {service.title}
+                              </div>
+                              <ChevronRight size={16} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
+                            </Link>
+                          );
+                        })}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -261,9 +310,11 @@ export const Header = () => {
                   <Link
                     href="/#contato"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between py-4 text-lg font-semibold text-primary hover:text-greenSup transition-colors group"
+                    className="flex items-center justify-between py-4 px-2 text-lg font-semibold text-primary hover:text-greenSup transition-colors group"
                   >
-                    Contato
+                    <span className="flex items-center gap-3">
+                      Contato
+                    </span>
                     <ChevronRight size={20} className="text-muted-foreground group-hover:text-greenSup transition-colors" />
                   </Link>
                 </div>
