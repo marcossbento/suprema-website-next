@@ -2,46 +2,51 @@
 
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import { getCookie } from "cookies-next"; // Você precisará instalar: npm install cookies-next
+import { getCookie } from "cookies-next";
 
 export default function AnalyticsLoader() {
-    const [consentGiven, setConsentGiven] = useState(false);
+  const [consentGiven, setConsentGiven] = useState(false);
 
-    useEffect(() => {
-        // Verifica se o cookie de consentimento existe e é verdadeiro
-        // Adapte o nome do cookie conforme seu componente de banner (ex: 'cookie_consent')
-        const consent = getCookie("cookie_consent");
-        if (consent === "true") {
-            setConsentGiven(true);
-        }
-    }, []);
+  useEffect(() => {
+    // Verifica o consentimento assim que o componente monta no cliente
+    const consent = getCookie("cookie_consent"); // Certifique-se que seu Banner grava este nome exato
+    if (consent === "true") {
+      setConsentGiven(true);
+    }
+  }, []);
 
-    // Se não houve consentimento, não renderiza nada (bloqueia os scripts)
-    if (!consentGiven) return null;
+  // Se não houver consentimento, não carrega nenhum script de rastreamento
+  if (!consentGiven) return null;
 
-    return (
-        <>
-            {/* --- ÁREA PARA COLAR OS CÓDIGOS DA AGÊNCIA --- */}
+  return (
+    <>
+      {/* --- 1. GOOGLE TAG MANAGER (Recomendado Centralizar tudo aqui futuramente) --- */}
+      <Script id="google-tag-manager" strategy="afterInteractive">
+        {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-KTL76NJ8');
+        `}
+      </Script>
 
-            {/* Exemplo 1: Google Analytics (GTAG) */}
-            {/* 
+      {/* --- 2. GOOGLE ADS (GTAG) --- */}
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=SEU-ID-AQUI"
+        src="https://www.googletagmanager.com/gtag/js?id=AW-16721688054"
         strategy="afterInteractive"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-ads" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'SEU-ID-AQUI');
+          gtag('config', 'AW-16721688054');
         `}
-      </Script> 
-      */}
+      </Script>
 
-            {/* Exemplo 2: Meta Pixel (Facebook) */}
-            {/* 
-      <Script id="facebook-pixel" strategy="afterInteractive">
+      {/* --- 3. META PIXEL (FACEBOOK) --- */}
+      <Script id="meta-pixel" strategy="afterInteractive">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -51,13 +56,27 @@ export default function AnalyticsLoader() {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', 'SEU-PIXEL-ID');
+          fbq('init', '828982009092120');
           fbq('track', 'PageView');
         `}
       </Script>
-      */}
 
-            {/* --- FIM DA ÁREA DOS CÓDIGOS --- */}
-        </>
-    );
+      {/* --- 4. LINKEDIN INSIGHT TAG --- */}
+      <Script id="linkedin-insight" strategy="afterInteractive">
+        {`
+          window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+          window._linkedin_data_partner_ids.push("7273089");
+          (function(l) {
+            if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+            window.lintrk.q=[]}
+            var s = document.getElementsByTagName("script")[0];
+            var b = document.createElement("script");
+            b.type = "text/javascript";b.async = true;
+            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+            s.parentNode.insertBefore(b, s);
+          })(window.lintrk);
+        `}
+      </Script>
+    </>
+  );
 }
