@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import {  Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/components/cookie-consent";
+import AnalyticsLoader from "@/components/analytics-loader"; // <--- Importe aqui
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -11,7 +12,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Suprema Analítica | Página Inicial",
-  description: "O laboratório de análises número 1 do Brasil.",	
+  description: "O laboratório de análises número 1 do Brasil.",
 };
 
 export default function RootLayout({
@@ -20,9 +21,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={poppins.className}>
+    <html lang="pt-BR" className={poppins.className}>
       <body>
+        {/* O Loader gerencia os scripts baseado no cookie */}
+        <AnalyticsLoader />
+
         {children}
+
+        {/* O Banner permite o usuário aceitar/recusar */}
         <CookieBanner />
       </body>
     </html>
