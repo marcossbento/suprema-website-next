@@ -1,29 +1,14 @@
-"use client";
-import ClientsSection from "@/components/clients";
-import ContactSection from "@/components/contact";
-import Footer from "@/components/footer-sup";
-import { Header } from "@/components/header-sup";
-import { EmblaCarousel } from "@/components/hero-slider";
-import ServiceCards from "@/components/service-cards";
-import { NossaEstrutura } from "@/components/structure";
-import WhyChooseUs from "@/components/why-choose-us";
+import { Metadata } from 'next';
+import Content from './content';
 
-export default function Home() {
+export const metadata: Metadata = {
+    title: 'Suprema Analítica | Laboratório de Controle de Qualidade',
+    description: 'O laboratório de análises número 1 do Brasil. Análises de água, efluentes, alimentos, solo e muito mais com acreditação ISO/IEC 17025.',
+    alternates: {
+        canonical: 'https://supremaanalitica.com.br',
+    },
+};
 
-  return (
-    <main id="main-content" className="bg-primary flex min-h-screen flex-col">
-      <Header />
-      <div className="relative overflow-hidden">
-        <EmblaCarousel />
-      </div>
-      <div className="flex flex-col items-center justify-center">
-        <ServiceCards />
-        <NossaEstrutura />
-        <WhyChooseUs></WhyChooseUs>
-        <ClientsSection />
-        <ContactSection />
-      </div>
-      <Footer></Footer>
-    </main>
-  );
+export default function Page() {
+    return <Content />;
 }
