@@ -98,7 +98,7 @@ export const Header = () => {
           "fixed top-0 left-0 right-0 z-50 flex flex-col justify-center transition-all duration-500 ease-in-out",
           isScrolled
             ? 'h-14 md:h-16 bg-white/70 shadow-sm backdrop-blur-xl' // Compact & Premium Blur
-            : 'h-20 md:h-24 bg-white' // Spacious Top
+            : 'h-16 md:h-20 bg-white' // Spacious Top
         )}
         initial={{ y: -100 }}
         animate={{

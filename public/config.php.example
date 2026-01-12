@@ -1,0 +1,11 @@
+<?php
+// Exemplo de configuração de e-mail
+// Renomeie este arquivo para 'config.php' no servidor e preencha com seus dados reais.
+
+return [
+    'smtp_host' => 'mail.seudominio.com.br',
+    'smtp_user' => 'seu_email@seudominio.com.br',
+    'smtp_pass' => 'sua_senha_secreta',
+    'smtp_port' => 465, // ou 587
+    'smtp_secure' => 'ssl' // ou 'tls'
+];

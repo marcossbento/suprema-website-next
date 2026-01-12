@@ -102,7 +102,7 @@ export const EmblaCarousel = () => {
               {/* Left Column: Text & CTA */}
               <div className="flex flex-col justify-center items-start h-full text-left select-none text-white font-bold pt-20 lg:pt-0">
                 <motion.h1
-                  className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 md:mb-6 max-w-3xl leading-tight`} // Increased mobile size
+                  className={`text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl mb-4 md:mb-6 max-w-3xl leading-tight`} // Adjusted for better responsiveness
                   initial={{ opacity: 0, x: -100 }}
                   animate={currentIndex === index ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
