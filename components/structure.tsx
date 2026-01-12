@@ -178,13 +178,7 @@ export const NossaEstrutura = () => {
                                                     className="object-cover"
                                                     sizes="(max-width: 768px) 100vw, 50vw"
                                                 />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                                                <div className="absolute bottom-0 left-0 p-6">
-                                                    <p className="text-white font-medium text-lg flex items-center gap-2">
-                                                        <CheckCircle2 size={20} className="text-greenSup" />
-                                                        {slide.alt}
-                                                    </p>
-                                                </div>
+
                                             </div>
                                         </div>
                                     ))}
@@ -193,19 +187,21 @@ export const NossaEstrutura = () => {
 
                             {/* Navigation Buttons */}
                             <motion.button
+                                initial={{ y: "-50%" }}
                                 whileHover={{ scale: 1.1, backgroundColor: "rgba(34, 197, 94, 1)" }}
                                 whileTap={{ scale: 0.9 }}
                                 onClick={scrollPrev}
-                                className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-shadow shadow-lg"
+                                className="absolute top-1/2 left-4 bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-shadow shadow-lg"
                                 aria-label="Anterior"
                             >
                                 <ChevronLeft size={24} />
                             </motion.button>
                             <motion.button
+                                initial={{ y: "-50%" }}
                                 whileHover={{ scale: 1.1, backgroundColor: "rgba(34, 197, 94, 1)" }}
                                 whileTap={{ scale: 0.9 }}
                                 onClick={scrollNext}
-                                className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-shadow shadow-lg"
+                                className="absolute top-1/2 right-4 bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-shadow shadow-lg"
                                 aria-label="Próximo"
                             >
                                 <ChevronRight size={24} />

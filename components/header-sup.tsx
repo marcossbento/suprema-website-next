@@ -180,11 +180,14 @@ export const Header = () => {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/#contato" legacyBehavior passHref>
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-primary/5 font-bold text-base transition-colors")}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/#contato"
+                    className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-primary/5 font-bold text-base transition-colors")}
+                  >
                     Contato
-                  </NavigationMenuLink>
-                </Link>
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
