@@ -16,6 +16,14 @@ function sanitize($data) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // --- Anti-Spam (Honeypot) Check ---
+    // Se o campo oculto 'website_check' estiver preenchido, é provável que seja um bot.
+    if (!empty($_POST['website_check'])) {
+        // Retorna sucesso para enganar o bot, mas não envia o email
+        echo json_encode(['success' => true, 'message' => 'Enviado com sucesso!']);
+        exit;
+    }
+
     // Instancia o PHPMailer
     $mail = new PHPMailer(true);
 
@@ -51,78 +59,151 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Remetente e destinatário
-        $mail->setFrom('ti@supremaanalitica.com.br', $nome); // Envia como TI mas com nome do cliente
+        $mail->setFrom('ti@supremaanalitica.com.br', 'Site Suprema Analítica'); // Remetente fixo autenticado
         $mail->addReplyTo($email, $nome); // Responder para o cliente
         $mail->addAddress('vendas@supremaanalitica.com.br', 'Vendas Suprema');
 
-        $mensagem = "";
+        $detalhesAnalise = "";
+        $tituloAnalise = "";
         
-        // Verifica qual o tipo de análise escolhida
+        // Verifica qual o tipo de análise escolhida e formata os detalhes
         if ($analise === 'agua') {
-            $tipoAgua = sanitize($_POST['tipo_agua'] ?? '');
-            $tipoAguaOutro = sanitize($_POST['tipo_agua_outro'] ?? '');
-            $finalidadeAgua = sanitize($_POST['finalidade_agua'] ?? '');
-            $finalidadeAguaOutro = sanitize($_POST['finalidade_agua_outro'] ?? '');
+            $tituloAnalise = "Análise de Água";
+            $tipoAgua = sanitize($_POST['tipo_agua'] ?? '-');
+            $finalidadeAgua = sanitize($_POST['finalidade_agua'] ?? '-');
             
-            $mensagem .= "<strong>Análise de Água:</strong><br>";
-            $mensagem .= "<strong>Tipo:</strong> $tipoAgua<br>";
-            if (!empty($tipoAguaOutro)) $mensagem .= "<strong>Especif.:</strong> $tipoAguaOutro<br>";
-            $mensagem .= "<strong>Finalidade:</strong> $finalidadeAgua<br>";
-            if (!empty($finalidadeAguaOutro)) $mensagem .= "<strong>Especif. Finalidade:</strong> $finalidadeAguaOutro<br>";
+            $detalhesAnalise .= "<tr><td style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Tipo de Água:</strong></td><td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$tipoAgua</td></tr>";
+            $detalhesAnalise .= "<tr><td style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Finalidade:</strong></td><td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$finalidadeAgua</td></tr>";
         
         } elseif ($analise === 'solo') {
-            $objetivoSolo = sanitize($_POST['objetivo_solo'] ?? '');
-            $objetivoSoloOutro = sanitize($_POST['objetivo_solo_outro'] ?? '');
+            $tituloAnalise = "Análise de Solo";
+            $objetivoSolo = sanitize($_POST['objetivo_solo'] ?? '-');
             
-            $mensagem .= "<strong>Análise de Solo:</strong><br>";
-            $mensagem .= "<strong>Objetivo:</strong> $objetivoSolo<br>";
-            if (!empty($objetivoSoloOutro)) $mensagem .= "<strong>Especif.:</strong> $objetivoSoloOutro<br>";
+            $detalhesAnalise .= "<tr><td style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Objetivo:</strong></td><td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$objetivoSolo</td></tr>";
 
         } elseif ($analise === 'cosmeticos') {
-            $tipoCosmetico = sanitize($_POST['tipo_cosmetico'] ?? '');
-            $tipoCosmeticoOutro = sanitize($_POST['tipo_cosmetico_outro'] ?? '');
-            $isLancamento = sanitize($_POST['lancamento_cosmetico'] ?? '');
+            $tituloAnalise = "Análise de Cosméticos";
+            $tipoCosmetico = sanitize($_POST['tipo_cosmetico'] ?? '-');
             
-            $mensagem .= "<strong>Análise de Cosméticos:</strong><br>";
-            $mensagem .= "<strong>Tipo:</strong> $tipoCosmetico<br>";
-            if (!empty($tipoCosmeticoOutro)) $mensagem .= "<strong>Especif.:</strong> $tipoCosmeticoOutro<br>";
-            $mensagem .= "<strong>Lançamento?</strong> $isLancamento<br>";
+            $detalhesAnalise .= "<tr><td style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Tipo:</strong></td><td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$tipoCosmetico</td></tr>";
 
         } elseif ($analise === 'alimentos') {
-            $tipoAlimento = sanitize($_POST['tipo_alimento'] ?? '');
-            $tipoAlimentoOutro = sanitize($_POST['tipo_alimento_outro'] ?? '');
-            $origemAlimento = sanitize($_POST['origem_alimento'] ?? '');
+            $tituloAnalise = "Análise de Alimentos";
+            $tipoAlimento = sanitize($_POST['tipo_alimento'] ?? '-');
             
-            $mensagem .= "<strong>Análise de Alimentos:</strong><br>";
-            $mensagem .= "<strong>Tipo:</strong> $tipoAlimento<br>";
-            if (!empty($tipoAlimentoOutro)) $mensagem .= "<strong>Especif.:</strong> $tipoAlimentoOutro<br>";
-            $mensagem .= "<strong>Origem:</strong> $origemAlimento<br>";
+            $detalhesAnalise .= "<tr><td style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Tipo:</strong></td><td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$tipoAlimento</td></tr>";
 
         } elseif ($analise === 'outro') {
-            // Em 'outro', usamos os campos de params detalhados ou um campo específico se houver
+            $tituloAnalise = "Outros Serviços";
+            // Em 'outro', usamos os campos de params detalhados
+        } else {
+             $tituloAnalise = ucfirst($analise);
         }
 
-        // Compondo a mensagem
+        // Estilos CSS Inline para emails
+        $primaryColor = "#182d70"; // Azul escuro da marca
+        $accentColor = "#00d64f"; // Verde da marca
+        $grayLight = "#f8f9fa";
+        $textColor = "#333333";
+
+        // Compondo a mensagem HTML
         $mail->isHTML(true);
-        $mail->Subject = 'Novo Orçamento - Site Suprema Analítica';
+        $mail->Subject = "Novo Lead: $tituloAnalise - $nome"; // Assunto mais direto
         $mail->Body    = "
-        <div style='font-family: Arial, sans-serif; color: #333;'>
-            <h2 style='color: #182d70;'>Solicitação de Orçamento</h2>
-            <hr>
-            <p><strong>Nome:</strong> $nome</p>
-            <p><strong>CNPJ:</strong> $cnpj</p>
-            <p><strong>Telefone:</strong> $telefone</p>
-            <p><strong>E-mail:</strong> $email</p>
-            <p><strong>Cidade/UF:</strong> $cidade</p>
-            <br>
-            <div style='background: #f4f4f4; padding: 15px; border-radius: 5px;'>
-                $mensagem
-                <p><strong>Parâmetros/Detalhes:</strong><br>" . nl2br($parametros) . "</p>
-                <p><strong>Quantidade:</strong> $quantidade</p>
-                <p><strong>Prazo:</strong> $prazoEntrega</p>
-                <p><strong>Cliente Novo?</strong> $utilizouServicos</p>
-            </div>
-        </div>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <title>Nova Solicitação de Orçamento</title>
+        </head>
+        <body style='margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; color: $textColor;'>
+            <table role='presentation' border='0' cellpadding='0' cellspacing='0' width='100%'>
+                <tr>
+                    <td style='padding: 20px 0 30px 0;' align='center'>
+                        
+                        <!-- Container Principal -->
+                        <table role='presentation' border='0' cellpadding='0' cellspacing='0' width='600' style='background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden;'>
+                            
+                            <!-- Cabeçalho -->
+                            <tr>
+                                <td bgcolor='$primaryColor' style='padding: 30px 40px; text-align: center;'>
+                                    <h1 style='margin: 0; font-size: 24px; color: #ffffff; text-transform: uppercase; letter-spacing: 1px;'>Nova Solicitação</h1>
+                                    <p style='margin: 10px 0 0; color: $accentColor; font-size: 16px; font-weight: bold;'>$tituloAnalise</p>
+                                </td>
+                            </tr>
+
+                            <!-- Conteúdo do Cliente -->
+                            <tr>
+                                <td style='padding: 40px 40px 20px 40px;'>
+                                    <h3 style='border-left: 4px solid $accentColor; padding-left: 10px; color: $primaryColor; margin-top: 0;'>Dados do Cliente</h3>
+                                    <table role='presentation' border='0' cellpadding='0' cellspacing='0' width='100%' style='font-size: 14px;'>
+                                        <tr>
+                                            <td width='35%' style='padding: 8px 0; font-weight: bold; color: #666;'>Nome Completo:</td>
+                                            <td style='padding: 8px 0;'>$nome</td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 8px 0; font-weight: bold; color: #666;'>Empresa / CNPJ:</td>
+                                            <td style='padding: 8px 0;'>$cnpj</td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 8px 0; font-weight: bold; color: #666;'>Email:</td>
+                                            <td style='padding: 8px 0;'><a href='mailto:$email' style='color: $primaryColor; text-decoration: none;'>$email</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 8px 0; font-weight: bold; color: #666;'>Telefone / WhatsApp:</td>
+                                            <td style='padding: 8px 0;'><a href='https://wa.me/55" . preg_replace('/\D/', '', $telefone) . "' style='color: $accentColor; text-decoration: none; font-weight: bold;'>$telefone (Clique para Whats)</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style='padding: 8px 0; font-weight: bold; color: #666;'>Localização:</td>
+                                            <td style='padding: 8px 0;'>$cidade</td>
+                                        </tr>
+                                         <tr>
+                                            <td style='padding: 8px 0; font-weight: bold; color: #666;'>Cliente Recorrente?</td>
+                                            <td style='padding: 8px 0;'><span style='background-color: #eef2ff; color: $primaryColor; padding: 4px 8px; border-radius: 4px; font-size: 12px;'>$utilizouServicos</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Conteúdo da Solicitação -->
+                            <tr>
+                                <td style='padding: 0 40px 40px 40px;'>
+                                    <div style='background-color: $grayLight; border-radius: 8px; padding: 25px;'>
+                                        <h3 style='border-left: 4px solid $accentColor; padding-left: 10px; color: $primaryColor; margin-top: 0;'>Detalhes do Orçamento</h3>
+                                        <table role='presentation' border='0' cellpadding='0' cellspacing='0' width='100%' style='font-size: 14px;'>
+                                            
+                                            $detalhesAnalise
+
+                                            <tr>
+                                                <td width='40%' style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Quantidade:</strong></td>
+                                                <td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$quantidade</td>
+                                            </tr>
+                                            <tr>
+                                                <td style='padding: 8px 0; border-bottom: 1px solid #eee;'><strong>Prazo Desejado:</strong></td>
+                                                <td style='padding: 8px 0; border-bottom: 1px solid #eee;'>$prazoEntrega</td>
+                                            </tr>
+                                        </table>
+                                        
+                                        <p style='margin-top: 20px; font-weight: bold; color: $primaryColor;'>Observações / Parâmetros:</p>
+                                        <div style='background-color: #ffffff; border: 1px solid #e0e0e0; padding: 15px; border-radius: 4px; color: #555; font-style: italic; white-space: pre-wrap;'>" . (empty($parametros) ? 'Nenhuma observação informada.' : $parametros) . "</div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                             <!-- Rodapé -->
+                            <tr>
+                                <td bgcolor='$primaryColor' style='padding: 20px; text-align: center; color: #8898aa; font-size: 12px;'>
+                                    <p style='margin: 0;'>Suprema Analítica &copy; " . date('Y') . "</p>
+                                    <p style='margin: 5px 0 0;'>Email enviado automaticamente pelo site.</p>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>
         ";
 
         // Envia o e-mail

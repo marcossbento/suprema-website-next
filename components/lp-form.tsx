@@ -1,20 +1,31 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 
 export default function LPForm() {
     const [analysisType, setAnalysisType] = useState("")
+    const [tipoAgua, setTipoAgua] = useState("")
+    const [finalidadeAgua, setFinalidadeAgua] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' })
+    const formRef = useRef<HTMLFormElement>(null)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsSubmitting(true)
         setStatus({ type: null, message: '' })
 
-        const formData = new FormData(e.currentTarget)
+        // Use formData from the event manually or via ref, but ref is safer if we need to reset later
+        // Construct FormData from the form ref if available, or event target as fallback for the data itself
+        const currentForm = formRef.current
+        if (!currentForm) return
+
+        const formData = new FormData(currentForm)
+
+        // Debug log
+        console.log('Form Values:', Object.fromEntries(formData.entries()))
 
         try {
             const response = await fetch('/send_email.php', {
@@ -37,7 +48,9 @@ export default function LPForm() {
 
             if (json_response_success(data)) {
                 setStatus({ type: 'success', message: data.message || 'Solicitação enviada com sucesso! Em breve entraremos em contato.' })
-                e.currentTarget.reset()
+                if (formRef.current) {
+                    formRef.current.reset()
+                }
                 setAnalysisType("")
             } else {
                 throw new Error(data.message || 'Erro ao enviar solicitação.')
@@ -54,6 +67,32 @@ export default function LPForm() {
         return data && (data.success === true || data.status === 'success')
     }
 
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, "")
+        if (value.length > 11) value = value.slice(0, 11)
+
+        if (value.length > 10) {
+            value = value.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")
+        } else if (value.length > 5) {
+            value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3")
+        } else if (value.length > 2) {
+            value = value.replace(/^(\d{2})(\d{0,5})/, "($1) $2")
+        }
+        e.target.value = value
+    }
+
+    const handleCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, "")
+        if (value.length > 14) value = value.slice(0, 14)
+
+        value = value.replace(/^(\d{2})(\d)/, "$1.$2")
+        value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+        value = value.replace(/\.(\d{3})(\d)/, ".$1/$2")
+        value = value.replace(/(\d{4})(\d)/, "$1-$2")
+
+        e.target.value = value
+    }
+
     return (
         <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 rounded-2xl shadow-xl">
             <div className="mb-6">
@@ -65,21 +104,22 @@ export default function LPForm() {
                 </p>
             </div>
 
-            {status.type && (
-                <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${status.type === 'success' ? 'bg-green-500/20 text-green-100 border border-green-500/30' : 'bg-red-500/20 text-red-100 border border-red-500/30'}`}
-                >
-                    {status.type === 'success' ? <CheckCircle2 className="w-5 h-5 shrink-0" /> : <AlertCircle className="w-5 h-5 shrink-0" />}
-                    <p className="text-sm font-medium">{status.message}</p>
-                </motion.div>
-            )}
+
 
             <form
+                ref={formRef}
                 onSubmit={handleSubmit}
                 className="space-y-4"
             >
+                {/* Honeypot field for anti-spam */}
+                <input
+                    type="text"
+                    name="website_check"
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1">
                         <label htmlFor="user_name" className="text-sm font-medium text-white ml-1">Nome Completo</label>
@@ -115,6 +155,8 @@ export default function LPForm() {
                             id="telefone"
                             placeholder="(00) 00000-0000"
                             required
+                            onChange={handlePhoneChange}
+                            maxLength={15}
                             className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder:text-gray-400 focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all"
                         />
                     </div>
@@ -127,6 +169,8 @@ export default function LPForm() {
                             id="cnpj"
                             placeholder="00.000.000/0000-00"
                             required
+                            onChange={handleCnpjChange}
+                            maxLength={18}
                             className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder:text-gray-400 focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all"
                         />
                     </div>
@@ -175,7 +219,13 @@ export default function LPForm() {
                         >
                             <div className="space-y-1">
                                 <label htmlFor="tipo_agua" className="text-sm font-medium text-white ml-1">Tipo de Água</label>
-                                <select name="tipo_agua" id="tipo_agua" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black">
+                                <select
+                                    name="tipo_agua"
+                                    id="tipo_agua"
+                                    value={tipoAgua}
+                                    onChange={(e) => setTipoAgua(e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black"
+                                >
                                     <option value="">Selecione...</option>
                                     <option value="Potável">Potável</option>
                                     <option value="Industrial">Industrial</option>
@@ -186,11 +236,17 @@ export default function LPForm() {
 
                             <div className="space-y-1">
                                 <label htmlFor="finalidade_agua" className="text-sm font-medium text-white ml-1">Finalidade</label>
-                                <select name="finalidade_agua" id="finalidade_agua" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black">
+                                <select
+                                    name="finalidade_agua"
+                                    id="finalidade_agua"
+                                    value={finalidadeAgua}
+                                    onChange={(e) => setFinalidadeAgua(e.target.value)}
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black"
+                                >
                                     <option value="">Selecione...</option>
-                                    <option value="Conformidade">Conformidade com regulamentações</option>
-                                    <option value="Manutenção">Manutenção regular</option>
-                                    <option value="Problema">Solução de problema específico</option>
+                                    <option value="Conformidade com regulamentações">Conformidade com regulamentações</option>
+                                    <option value="Manutenção regular">Manutenção regular</option>
+                                    <option value="Solução de problema específico">Solução de problema específico</option>
                                     <option value="Outro">Outro</option>
                                 </select>
                             </div>
@@ -209,8 +265,8 @@ export default function LPForm() {
                                 <label htmlFor="objetivo_solo" className="text-sm font-medium text-white ml-1">Objetivo da Análise</label>
                                 <select name="objetivo_solo" id="objetivo_solo" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black">
                                     <option value="">Selecione...</option>
-                                    <option value="Contaminação">Avaliação de contaminação</option>
-                                    <option value="Ambiental">Estudos ambientais</option>
+                                    <option value="Avaliação de contaminação">Avaliação de contaminação</option>
+                                    <option value="Estudos ambientais">Estudos ambientais</option>
                                     <option value="Agricultura">Agricultura</option>
                                     <option value="Outro">Outro</option>
                                 </select>
@@ -251,9 +307,9 @@ export default function LPForm() {
                                 <label htmlFor="tipo_alimento" className="text-sm font-medium text-white ml-1">Tipo de Alimento</label>
                                 <select name="tipo_alimento" id="tipo_alimento" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black">
                                     <option value="">Selecione...</option>
-                                    <option value="Sólidos">Alimentos sólidos</option>
-                                    <option value="Bebidas">Bebidas (não alcoólicas)</option>
-                                    <option value="Alcoólicas">Bebidas alcoólicas</option>
+                                    <option value="Alimentos sólidos">Alimentos sólidos</option>
+                                    <option value="Bebidas (não alcoólicas)">Bebidas (não alcoólicas)</option>
+                                    <option value="Bebidas alcoólicas">Bebidas alcoólicas</option>
                                     <option value="Outro">Outro</option>
                                 </select>
                             </div>
@@ -297,15 +353,43 @@ export default function LPForm() {
                     <div className="space-y-1">
                         <label htmlFor="prazo_entrega" className="text-sm font-medium text-white ml-1">Prazo</label>
                         <select name="prazo_entrega" id="prazo_entrega" required className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-greenSup focus:ring-1 focus:ring-greenSup transition-all [&>option]:text-black">
-                            <option value="Regular">Regular (4-7 dias)</option>
-                            <option value="Urgente">Urgente (1-3 dias)</option>
-                            <option value="Flexível">Flexível (7+ dias)</option>
+                            <option value="Regular (4-7 dias)">Regular (4-7 dias)</option>
+                            <option value="Urgente (1-3 dias)">Urgente (1-3 dias)</option>
+                            <option value="Flexível (7+ dias)">Flexível (7+ dias)</option>
                         </select>
                     </div>
                 </div>
 
-                {/* Hidden field for stats */}
-                <input type="hidden" name="utilizou_servicos" value="Não/Novo Lead" />
+                <div className="space-y-3 pt-2">
+                    <span className="text-sm font-medium text-white ml-1 block">
+                        Sua empresa já realizou serviços com a Suprema?
+                    </span>
+                    <div className="grid grid-cols-2 gap-4">
+                        <label className="relative cursor-pointer group">
+                            <input
+                                type="radio"
+                                name="utilizou_servicos"
+                                value="Sim, já somos clientes"
+                                className="peer sr-only"
+                            />
+                            <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-center transition-all hover:bg-white/10 peer-checked:bg-greenSup peer-checked:border-greenSup peer-checked:text-white text-gray-300">
+                                <span className="text-sm font-medium">Sim, já somos clientes</span>
+                            </div>
+                        </label>
+                        <label className="relative cursor-pointer group">
+                            <input
+                                type="radio"
+                                name="utilizou_servicos"
+                                value="Não, primeira vez"
+                                defaultChecked
+                                className="peer sr-only"
+                            />
+                            <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-center transition-all hover:bg-white/10 peer-checked:bg-greenSup peer-checked:border-greenSup peer-checked:text-white text-gray-300">
+                                <span className="text-sm font-medium">Não, primeira vez</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
 
                 <button
                     type="submit"
@@ -324,6 +408,17 @@ export default function LPForm() {
                         </>
                     )}
                 </button>
+
+                {status.type && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`mt-4 p-4 rounded-lg flex items-start gap-3 ${status.type === 'success' ? 'bg-green-500/20 text-green-100 border border-green-500/30' : 'bg-red-500/20 text-red-100 border border-red-500/30'}`}
+                    >
+                        {status.type === 'success' ? <CheckCircle2 className="w-5 h-5 shrink-0" /> : <AlertCircle className="w-5 h-5 shrink-0" />}
+                        <p className="text-sm font-medium">{status.message}</p>
+                    </motion.div>
+                )}
 
                 <p className="text-center text-xs text-gray-300 mt-4">
                     Seus dados estão seguros. Respondemos em até 1 dia útil.
