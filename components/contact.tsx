@@ -67,6 +67,7 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -8 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{
         type: "spring",
@@ -75,7 +76,7 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
         duration: 0.6,
         delay: index * 0.1
       }}
-      className={`group relative overflow-hidden backdrop-blur-md border p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 h-full flex flex-col
+      className={`group relative overflow-hidden backdrop-blur-md border p-8 rounded-3xl transition-colors transition-shadow duration-500 h-full flex flex-col
         ${action.isPrimary
           ? 'bg-greenSup/10 border-greenSup/30 hover:bg-greenSup/20 hover:shadow-[0_0_50px_-10px_rgba(34,197,94,0.3)]'
           : 'bg-white/5 border-white/10 hover:bg-white/10 hover:shadow-[0_0_40px_-10px_rgba(34,197,94,0.1)]'
@@ -94,7 +95,7 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
           <Icon size={32} />
         </div>
 
-        <h3 className="text-2xl font-bold text-white mb-6">{title}</h3>
+        <h3 className="text-2xl font-bold text-white mb-6 w-full">{title}</h3>
 
         <div className="space-y-4 text-gray-100 flex-grow font-medium w-full">
           {items.map((item, idx) => (
@@ -103,20 +104,28 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
                 key={idx}
                 href={item.href}
                 onClick={(e) => handleCopy(item.copyValue || item.text, idx, e)}
-                className="group/link flex items-center justify-center gap-2 hover:text-greenSup transition-colors p-3 rounded-lg hover:bg-white/5 w-full relative cursor-pointer"
+                className="group/link flex flex-col md:flex-row items-center justify-center gap-2 hover:text-greenSup transition-colors p-3 rounded-lg hover:bg-white/5 w-full cursor-pointer"
                 title="Clique para copiar (Desktop) ou ligar/enviar (Mobile)"
               >
-                {item.prefix && <span className="font-medium text-gray-400">{item.prefix}:</span>}
-                <span className="text-white font-semibold">{item.text}</span>
+                {/* Container flex para manter texto e ícone juntos centralizados e quebrando linha se precisar */}
+                <div className="flex flex-wrap items-center justify-center gap-2 text-center w-full">
+                  {item.prefix && <span className="font-medium text-gray-400">{item.prefix}:</span>}
+
+                  <span className="text-white font-semibold break-all">{item.text}</span>
+
+                  {/* Ícone de Copiar - Relativo ao texto */}
+                  <div className="shrink-0 flex items-center justify-center text-greenSup/70 group-hover/link:text-greenSup transition-colors">
+                    {copiedIndex === idx ? <Check size={18} /> : <Copy size={18} />}
+                  </div>
+                </div>
 
                 {/* Feedback Visual de Cópia */}
-                <span className="absolute right-2 text-greenSup opacity-0 group-hover/link:opacity-100 transition-opacity">
-                  {copiedIndex === idx ? <Check size={16} /> : <Copy size={16} />}
-                </span>
                 {copiedIndex === idx && (
-                  <span className="absolute -top-8 bg-greenSup text-white text-xs py-1 px-2 rounded shadow-lg animate-fade-in-up">
-                    Copiado!
-                  </span>
+                  <div className="relative w-full h-0 flex justify-center">
+                    <span className="absolute bottom-2 bg-greenSup text-white text-xs py-1 px-2 rounded shadow-lg animate-fade-in-up whitespace-nowrap z-20">
+                      Copiado!
+                    </span>
+                  </div>
                 )}
               </Link>
             ) : (
