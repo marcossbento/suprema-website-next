@@ -54,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={poppins.className}>
+    <html lang="pt-BR" className={`${poppins.variable} font-sans`}>
       <body>
         {/* O Loader gerencia os scripts baseado no cookie */}
         <AnalyticsLoader />
