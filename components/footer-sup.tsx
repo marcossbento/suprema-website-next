@@ -153,10 +153,31 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
+                {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-                    <p>
-                        Copyright &copy; {currentYear} <span className="text-white font-medium">Suprema Analítica</span>. Todos os direitos reservados.
-                    </p>
+                    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
+                        <p className="text-center md:text-left">
+                            Copyright &copy; {currentYear} <span className="text-white font-medium">Suprema Analítica</span>. Todos os direitos reservados.
+                        </p>
+
+                        <a
+                            href="https://marcossbento.vercel.app/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-1.5 transition-all duration-300 group"
+                        >
+                            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider group-hover:text-greenSup transition-colors">
+                                Desenvolvido por:
+                            </span>
+                            <Image
+                                src="/marcossbento.png"
+                                alt="Desenvolvido por Marcos Bento"
+                                width={100}
+                                height={32}
+                                className="h-6 w-auto object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300"
+                            />
+                        </a>
+                    </div>
                     <div className="flex items-center gap-6">
                         <Link href="/privacidade" className="hover:text-white transition-colors">Privacidade</Link>
                         <Link href="/termos" className="hover:text-white transition-colors">Termos de Uso</Link>
