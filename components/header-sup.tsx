@@ -225,7 +225,7 @@ export const Header = () => {
                   <span className="sr-only">Abrir menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[380px] pt-12 border-l border-border/50 backdrop-blur-xl bg-white/95">
+              <SheetContent side="right" className="w-[300px] sm:w-[380px] pt-12 pb-20 border-l border-border/50 backdrop-blur-xl bg-white/95 overflow-y-auto">
                 <SheetTitle className="sr-only">
                   Menu de navegação
                 </SheetTitle>
