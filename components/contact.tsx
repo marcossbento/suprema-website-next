@@ -104,7 +104,7 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
                 key={idx}
                 href={item.href}
                 onClick={(e) => handleCopy(item.copyValue || item.text, idx, e)}
-                className="group/link flex flex-col md:flex-row items-center justify-center gap-2 hover:text-greenSup transition-colors p-3 rounded-lg hover:bg-white/5 w-full cursor-pointer"
+                className="group/link relative flex flex-col md:flex-row items-center justify-center gap-2 hover:text-greenSup transition-colors p-3 rounded-lg hover:bg-white/5 w-full cursor-pointer"
                 title="Clique para copiar (Desktop) ou ligar/enviar (Mobile)"
               >
                 {/* Container flex para manter texto e ícone juntos centralizados e quebrando linha se precisar */}
@@ -121,11 +121,9 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
 
                 {/* Feedback Visual de Cópia */}
                 {copiedIndex === idx && (
-                  <div className="relative w-full h-0 flex justify-center">
-                    <span className="absolute bottom-2 bg-greenSup text-white text-xs py-1 px-2 rounded shadow-lg animate-fade-in-up whitespace-nowrap z-20">
-                      Copiado!
-                    </span>
-                  </div>
+                  <span className="absolute -top-3 right-4 bg-greenSup text-white text-xs py-1 px-2 rounded shadow-lg animate-fade-in-up whitespace-nowrap z-20 pointer-events-none">
+                    Copiado!
+                  </span>
                 )}
               </Link>
             ) : (
