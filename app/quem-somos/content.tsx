@@ -86,7 +86,7 @@ export default function QuemSomosPage() {
                             className="w-full md:w-1/2 relative h-[500px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group"
                         >
                             <Image
-                                src="/equipe.png"
+                                src="/equipe.webp"
                                 alt="Equipe Suprema Analítica"
                                 fill
                                 className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -248,7 +248,7 @@ export default function QuemSomosPage() {
                         className="grid md:grid-cols-3 gap-8"
                     >
                         {/* Card 1: Satisfação */}
-                        <motion.div variants={fadeInUp} className="group bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                        <motion.div variants={fadeInUp} whileHover={{ y: -8 }} className="group bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-colors duration-300 border border-gray-100 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                             <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                                 <Users className="w-7 h-7" />
@@ -260,7 +260,7 @@ export default function QuemSomosPage() {
                         </motion.div>
 
                         {/* Card 2: Compromisso */}
-                        <motion.div variants={fadeInUp} className="group bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                        <motion.div variants={fadeInUp} whileHover={{ y: -8 }} className="group bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-colors duration-300 border border-gray-100 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-greenSup to-green-600 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                             <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-greenSup group-hover:bg-greenSup group-hover:text-white transition-colors duration-300">
                                 <ShieldCheck className="w-7 h-7" />
@@ -272,7 +272,7 @@ export default function QuemSomosPage() {
                         </motion.div>
 
                         {/* Card 3: Inovação */}
-                        <motion.div variants={fadeInUp} className="group bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                        <motion.div variants={fadeInUp} whileHover={{ y: -8 }} className="group bg-white p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-colors duration-300 border border-gray-100 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                             <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
                                 <Zap className="w-7 h-7" />

@@ -28,11 +28,11 @@ export default function AmostragemPage() {
             <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 md:pt-32">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/hero-amostragem.png"
+                        src="/hero-amostragem.webp"
+                        priority
                         alt="Coleta de Amostras"
                         fill
                         className="object-cover opacity-60"
-                        priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/80 via-primary-dark/60 to-primary-dark" />
                 </div>

@@ -30,11 +30,11 @@ export default function AnaliseDeEfluentesPage() {
             <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 md:pt-32">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/effluent-hero.png"
+                        src="/effluent-hero.webp"
+                        priority
                         alt="Análise de Efluentes"
                         fill
                         className="object-cover opacity-50"
-                        priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/90 via-primary-dark/70 to-primary-dark" />
                 </div>

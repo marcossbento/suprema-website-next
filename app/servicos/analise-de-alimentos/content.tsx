@@ -253,7 +253,8 @@ export default function AnaliseDeAlimentosPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.2 }}
-                                className="bg-primary-dark border border-white/10 p-8 rounded-3xl hover:border-greenSup/50 transition-all duration-300 hover:-translate-y-2 group"
+                                whileHover={{ y: -8 }}
+                                className="bg-primary-dark border border-white/10 p-8 rounded-3xl hover:border-greenSup/50 transition-colors duration-300 group"
                             >
                                 <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-greenSup mb-6 group-hover:bg-greenSup group-hover:text-white transition-colors">
                                     <item.icon size={36} />

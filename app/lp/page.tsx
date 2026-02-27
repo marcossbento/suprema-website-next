@@ -60,12 +60,12 @@ const differentials = [
     {
         title: "Eco-Friendly",
         desc: "Processos sustentáveis e compromisso com o meio ambiente.",
-        image: "/effluent-hero.png"
+        image: "/effluent-hero.webp"
     },
     {
         title: "Experts",
         desc: "+70 profissionais altamente qualificados e dedicados.",
-        image: "/equipe.png"
+        image: "/equipe.webp"
     }
 ]
 

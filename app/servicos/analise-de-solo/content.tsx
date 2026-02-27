@@ -34,11 +34,11 @@ export default function AnaliseDeSoloPage() {
             <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/heroSoil.png" // Fallback or placeholder if not exists, user to provide or I'll use generic
+                        src="/heroSoil.webp" // Fallback or placeholder if not exists, user to provide or I'll use generic
+                        priority
                         alt="Análise de Solo"
                         fill
                         className="object-cover opacity-60"
-                        priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/80 via-primary-dark/60 to-primary-dark" />
                 </div>
@@ -110,7 +110,7 @@ export default function AnaliseDeSoloPage() {
                             <div className="relative bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
                                 <div className="relative w-full h-64 md:h-80 mb-6 rounded-2xl overflow-hidden bg-gray-800 group-hover:scale-[1.02] transition-transform duration-500">
                                     <Image
-                                        src="/soil-intro.png"
+                                        src="/soil-intro.webp"
                                         alt="Análise de Solo - Alta Produtividade"
                                         fill
                                         className="object-cover opacity-90 hover:opacity-100 transition-opacity duration-500"
@@ -216,9 +216,10 @@ export default function AnaliseDeSoloPage() {
                                 key={i}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
+                                viewport={{ once: true, amount: 0.4 }}
                                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                                className="group relative bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-greenSup/50 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                                whileHover={{ y: -10 }}
+                                className="group relative bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-greenSup/50 hover:bg-white/10 transition-colors duration-300 overflow-hidden"
                             >
                                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                                     <param.icon size={64} className="text-greenSup" />
