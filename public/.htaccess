@@ -1,0 +1,85 @@
+# ==========================================
+# Suprema Analítica - Apache .htaccess
+# Cache Policy & Performance Optimizations
+# ==========================================
+
+# Enable mod_rewrite
+Options -MultiViews
+RewriteEngine On
+
+# ==========================================
+# CACHE-CONTROL HEADERS
+# ==========================================
+
+<IfModule mod_headers.c>
+
+  # Assets com hash no nome (gerados pelo Next.js) → 1 ANO imutável
+  # Ex: /chunks/8008d994f91f0fb6.js, /media/a218039a.woff2
+  <FilesMatch "\.([0-9a-f]{8,})\.(js|css|woff2|woff|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Imagens e fontes da pasta public (sem hash) → 1 MÊS
+  <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf|otf)$">
+    Header set Cache-Control "public, max-age=2592000, stale-while-revalidate=86400"
+  </FilesMatch>
+
+  # JS e CSS sem hash (fallback) → 1 SEMANA
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "public, max-age=604800, stale-while-revalidate=86400"
+  </FilesMatch>
+
+  # HTML → 1 HORA (permite atualizações de conteúdo serem vistas rapidamente)
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "public, max-age=3600, stale-while-revalidate=300"
+  </FilesMatch>
+
+  # Prioridade: assets com hash já foram cobertos acima. A regra FilesMatch mais
+  # específica (com hash) prevalece porque o Apache para nas <FilesMatch> que
+  # fazem match. Garantimos a ordem correta com um bloco dedicado abaixo.
+
+</IfModule>
+
+# Bloco dedicado para _next/static/ — garante 1 ano para TUDO dentro dele
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
+
+# ==========================================
+# COMPRESSÃO GZIP / DEFLATE
+# ==========================================
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE font/woff2
+  AddOutputFilterByType DEFLATE font/woff
+</IfModule>
+
+# ==========================================
+# MIME TYPES
+# ==========================================
+
+<IfModule mod_mime.c>
+  AddType image/webp                    .webp
+  AddType font/woff2                    .woff2
+  AddType font/woff                     .woff
+  AddType application/javascript        .js
+  AddType text/css                      .css
+</IfModule>
+
+# ==========================================
+# SEGURANÇA BÁSICA
+# ==========================================
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
