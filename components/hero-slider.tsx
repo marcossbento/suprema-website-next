@@ -88,7 +88,6 @@ export const EmblaCarousel = () => {
               src={slide.image}
               alt={slide.alt}
               fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
               priority={index === 0}
               unoptimized
               className='object-cover'

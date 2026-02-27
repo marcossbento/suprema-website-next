@@ -40,7 +40,7 @@ export default function Footer() {
                     <div className="space-y-6">
                         <Link href="/" className="block w-48">
                             <Image
-                                src="/logoSupremaHorizontal.svg"
+                                src="/logoSupremaHorizontal.webp"
                                 alt="Suprema Analítica"
                                 width={180}
                                 height={45}

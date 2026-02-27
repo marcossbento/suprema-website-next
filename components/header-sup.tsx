@@ -113,7 +113,7 @@ export const Header = () => {
         <div className="w-full h-full flex justify-between items-center px-4 md:px-6 relative z-20">
           <Link href="/" aria-label="Página Inicial da Suprema Analítica" className="flex items-center">
             <Image
-              src="/logoSupremaHorizontal.svg"
+              src="/logoSupremaHorizontal.webp"
               width={201}
               height={25}
               alt="Logo Suprema Analítica"
