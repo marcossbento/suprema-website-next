@@ -180,7 +180,8 @@ export default function ContactSection() {
       title: "Telefones",
       items: [
         { text: "(16) 3114-2158", href: "tel:1631142158", copyValue: "(16) 3114-2158" },
-        { text: "(16) 99146-6550", href: "tel:16991466550", copyValue: "(16) 99146-6550" }
+        { text: "(16) 99146-6550", href: "tel:16991466550", copyValue: "(16) 99146-6550" },
+        { prefix: "SAC", text: "(16) 99437-6603", href: "tel:16994376603", copyValue: "(16) 99437-6603" }
       ],
       action: {
         text: "Falar no WhatsApp",
