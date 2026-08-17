@@ -74,10 +74,10 @@ export const NossaEstrutura = () => {
                 variants={containerVariants}
                 className="container relative z-10 px-6 md:px-12 lg:px-20 mx-auto"
             >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
                     {/* Left Column: Content & Trust */}
-                    <div className="flex flex-col gap-8 text-white">
+                    <div className="flex flex-col gap-8 text-white lg:col-span-5">
                         <motion.div variants={itemVariants}>
                             <h2 className="text-4xl md:text-5xl font-bold mb-4">
                                 Conheça nossa <span className="text-greenSup">Estrutura</span>
@@ -152,7 +152,7 @@ export const NossaEstrutura = () => {
                     </div>
 
                     {/* Right Column: Visual Carousel */}
-                    <motion.div variants={carouselVariants} className="relative">
+                    <motion.div variants={carouselVariants} className="relative lg:col-span-7">
                         {/* Decorative Elements */}
                         <motion.div
                             animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
@@ -170,15 +170,26 @@ export const NossaEstrutura = () => {
                                 <div className="embla__container flex">
                                     {structureSlides.map((slide) => (
                                         <div key={slide.id} className="embla__slide flex-[0_0_100%] min-w-0">
-                                            <div className="relative h-[400px] w-full">
+                                            <div className="relative aspect-[4/3] min-h-[350px] md:min-h-[420px] w-full overflow-hidden">
+                                                {/* Blurred Backdrop Layer */}
+                                                <div 
+                                                    className="absolute inset-0 z-0"
+                                                    style={{
+                                                        backgroundImage: `url(${slide.image})`,
+                                                        backgroundSize: 'cover',
+                                                        backgroundPosition: 'center',
+                                                        filter: 'blur(18px) brightness(0.45) saturate(1.2)',
+                                                        transform: 'scale(1.08)'
+                                                    }}
+                                                />
+                                                {/* Main Image */}
                                                 <Image
                                                     src={slide.image}
                                                     alt={slide.alt}
                                                     fill
-                                                    className="object-cover"
+                                                    className="object-contain z-10"
                                                     sizes="(max-width: 768px) 100vw, 50vw"
                                                 />
-
                                             </div>
                                         </div>
                                     ))}

@@ -346,20 +346,20 @@ export default function QuemSomosPage() {
                         >
                             {/* Clean 2x2 Grid with Hover Effects */}
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg border border-white/10 group">
-                                    <Image src="/blog/alto-investimento.webp" alt="Tecnologia 1" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-white/10 group">
+                                    <Image src="/imagensLab/equipeLaboratorio.jpeg" alt="Equipe de Laboratório" fill className="object-cover object-top transition-transform duration-500 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
                                 </div>
-                                <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg border border-white/10 group translate-y-8">
-                                    <Image src="/blog/analise-rad.webp" alt="Equipe" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-white/10 group translate-y-8">
+                                    <Image src="/imagensLab/IMG_8904.webp" alt="Equipamentos Modernos" fill className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
                                 </div>
-                                <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg border border-white/10 group">
-                                    <Image src="/blog/marco-hist.webp" alt="Microscópio" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-white/10 group">
+                                    <Image src="/imagensLab/IMG_8869.webp" alt="Análise de Dados" fill className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
                                 </div>
-                                <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg border border-white/10 group translate-y-8">
-                                    <Image src="/blog/marco-hist2.webp" alt="Tecnologia 2" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <div className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-white/10 group translate-y-8">
+                                    <Image src="/imagensLab/IMG_8889.webp" alt="Bancada de Laboratório" fill className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
                                 </div>
                             </div>

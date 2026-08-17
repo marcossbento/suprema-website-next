@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Remetente e destinatário
         $mail->setFrom('ti@supremaanalitica.com.br', 'Site Suprema Analítica'); // Remetente fixo autenticado
         $mail->addReplyTo($email, $nome); // Responder para o cliente
-        $mail->addAddress('vendas@supremaanalitica.com.br', 'Vendas Suprema');
+        $mail->addAddress('vendas2@supremaanalitica.com.br', 'Vendas Suprema');
 
         $detalhesAnalise = "";
         $tituloAnalise = "";

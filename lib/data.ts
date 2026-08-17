@@ -126,32 +126,32 @@ export const services = [
 export const structureSlides = [
     {
         id: 1,
-        image: "/blog/alto-investimento.webp",
+        image: "/imagensLab/IMG_8904.webp",
         alt: "Laboratório da Suprema Analítica com espectrômetro de emissão atômica."
     },
     {
         id: 2,
-        image: "/blog/analise-rad.webp",
+        image: "/imagensLab/IMG_8906.webp",
         alt: "Técnica de laboratório preparando amostras em bancada com vidrarias."
     },
     {
         id: 3,
-        image: "/blog/marco-hist.webp",
+        image: "/imagensLab/IMG_8891.webp",
         alt: "Área de trabalho do laboratório com equipamentos de análise modernos."
     },
     {
         id: 4,
-        image: "/blog/marco-hist2.webp",
+        image: "/imagensLab/IMG_8858.webp",
         alt: "Equipamento cromatógrafo a gás de alta performance em uso."
     },
     {
         id: 5,
-        image: "/blog/marco-hist3.webp",
+        image: "/imagensLab/IMG_8868.webp",
         alt: "Vista geral do laboratório limpo e organizado da Suprema Analítica."
     },
     {
         id: 6,
-        image: "/blog/marco-hist4.webp",
+        image: "/imagensLab/IMG_8886.webp",
         alt: "Detalhe de um equipamento de análise com frascos de amostra."
     }
 ];

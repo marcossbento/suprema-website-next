@@ -29,21 +29,31 @@ interface ContactCardData {
 }
 
 // Função utilitária para verificar horário de funcionamento
-const checkBusinessHours = () => {
+// Retorna: 'open' | 'lunch' | 'closed'
+const checkBusinessHours = (): 'open' | 'lunch' | 'closed' => {
   const now = new Date();
   const day = now.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
   const hour = now.getHours();
   const minute = now.getMinutes();
   const currentTime = hour * 60 + minute;
 
-  // Horário: Seg-Sex, 07:40 (460 min) às 18:00 (1080 min)
-  const openTime = 7 * 60 + 40;
-  const closeTime = 18 * 60;
+  // Horário: Seg-Sex, 07:40 às 18:00, com almoço das 11:30 às 13:00
+  const openTime   = 7 * 60 + 40;  // 07:40
+  const lunchStart = 11 * 60 + 30; // 11:30
+  const lunchEnd   = 13 * 60;      // 13:00
+  const closeTime  = 18 * 60;      // 18:00
 
   const isWeekDay = day >= 1 && day <= 5;
-  const isOpen = isWeekDay && currentTime >= openTime && currentTime < closeTime;
 
-  return isOpen;
+  if (!isWeekDay || currentTime < openTime || currentTime >= closeTime) {
+    return 'closed';
+  }
+
+  if (currentTime >= lunchStart && currentTime < lunchEnd) {
+    return 'lunch';
+  }
+
+  return 'open';
 };
 
 // Componente reutilizável para os cards
@@ -153,13 +163,13 @@ const ContactCard = ({ data, index }: { data: ContactCardData, index: number }) 
 };
 
 export default function ContactSection() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [businessStatus, setBusinessStatus] = useState<'open' | 'lunch' | 'closed'>('closed');
 
   useEffect(() => {
-    setIsOpen(checkBusinessHours());
+    setBusinessStatus(checkBusinessHours());
     // Atualizar a cada minuto para garantir precisão
     const interval = setInterval(() => {
-      setIsOpen(checkBusinessHours());
+      setBusinessStatus(checkBusinessHours());
     }, 60000);
     return () => clearInterval(interval);
   }, []);
@@ -196,12 +206,12 @@ export default function ContactSection() {
       icon: Mail,
       title: "E-mails",
       items: [
-        { text: "vendas@supremaanalitica.com.br", href: "mailto:vendas@supremaanalitica.com.br", copyValue: "vendas@supremaanalitica.com.br" },
+        { text: "vendas2@supremaanalitica.com.br", href: "mailto:vendas2@supremaanalitica.com.br", copyValue: "vendas2@supremaanalitica.com.br" },
         { text: "sac@supremaanalitica.com.br", href: "mailto:sac@supremaanalitica.com.br", copyValue: "sac@supremaanalitica.com.br" }
       ],
       action: {
         text: "Enviar E-mail",
-        href: "mailto:vendas@supremaanalitica.com.br",
+        href: "mailto:vendas2@supremaanalitica.com.br",
         icon: ExternalLink
       }
     },
@@ -254,9 +264,19 @@ export default function ContactSection() {
 
             {/* Business Hours Badge */}
             <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-              <div className={`w-3 h-3 rounded-full ${isOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-              <span className={`font-semibold ${isOpen ? 'text-green-400' : 'text-red-400'}`}>
-                {isOpen ? 'Aberto Agora' : 'Fechado'}
+              <div className={`w-3 h-3 rounded-full ${
+                businessStatus === 'open'  ? 'bg-green-500 animate-pulse' :
+                businessStatus === 'lunch' ? 'bg-yellow-400' :
+                                            'bg-red-500'
+              }`} />
+              <span className={`font-semibold ${
+                businessStatus === 'open'  ? 'text-green-400' :
+                businessStatus === 'lunch' ? 'text-yellow-300' :
+                                            'text-red-400'
+              }`}>
+                {businessStatus === 'open'  ? 'Aberto Agora' :
+                 businessStatus === 'lunch' ? 'Horário de Almoço' :
+                                             'Fechado'}
               </span>
             </div>
           </div>
